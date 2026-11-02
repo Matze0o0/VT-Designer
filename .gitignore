@@ -1,0 +1,18 @@
+# ISO 11783 standard documents (licensed, not for distribution)
+ISOBUS-ISO11783/
+
+# Build output
+build/
+out/
+cmake-build-*/
+
+# IDE / tooling
+.vs/
+.vscode/
+.idea/
+*.user
+CMakeUserPresets.json
+
+# Generated / temporary files
+*.iop.bak
+*.qm
