@@ -43,8 +43,9 @@ std::vector<std::uint8_t> pictureIndices(const VtObject& picture);
 // Converts an RGBA image (4 bytes per pixel, row major) into the given format using the standard
 // palette and stores it in the Picture Graphic object: actual width/height, format, data, and the
 // RLE option (set only when it makes the data smaller). Pixels with alpha < 128 become the object's
-// transparency colour and switch on the transparent option.
+// transparency colour and switch on the transparent option. With dither, the quantisation error is
+// spread to neighbouring pixels (Floyd-Steinberg), which suits photos better than flat graphics.
 void setPictureFromRgba(VtObject& picture, std::span<const std::uint8_t> rgba, int width, int height,
-                        PictureFormat format);
+                        PictureFormat format, bool dither = false);
 
 } // namespace vt

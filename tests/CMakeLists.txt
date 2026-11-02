@@ -14,8 +14,22 @@ add_executable(vtcore_tests
     ValidatorTest.cpp
     ExportersTest.cpp
     ProjectFileTest.cpp
+    PoolEditingTest.cpp
 )
 target_link_libraries(vtcore_tests PRIVATE vtcore GTest::gtest_main)
 
 include(GoogleTest)
 gtest_discover_tests(vtcore_tests)
+
+# Editor logic that does not need a window (document, undo, object factory).
+if(TARGET Qt6::Widgets)
+    set(APP_DIR ${CMAKE_SOURCE_DIR}/src/app)
+    add_executable(vtdesigner_tests
+        app/DocumentTest.cpp
+        ${APP_DIR}/Document.cpp ${APP_DIR}/Document.h
+        ${APP_DIR}/ObjectFactory.cpp ${APP_DIR}/ObjectFactory.h
+    )
+    target_include_directories(vtdesigner_tests PRIVATE ${APP_DIR})
+    target_link_libraries(vtdesigner_tests PRIVATE vtcore vtrender Qt6::Widgets Qt6::Test GTest::gtest_main)
+    gtest_discover_tests(vtdesigner_tests)
+endif()

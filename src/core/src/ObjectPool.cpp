@@ -1,5 +1,6 @@
 #include "vtcore/ObjectPool.h"
 
+#include <algorithm>
 #include <stdexcept>
 #include <string>
 
@@ -50,7 +51,18 @@ const VtObject* ObjectPool::workingSet() const
     return nullptr;
 }
 
+std::optional<std::size_t> ObjectPool::indexOf(ObjectId id) const
+{
+    const auto it = m_index.find(id);
+    return it == m_index.end() ? std::nullopt : std::optional<std::size_t>(it->second);
+}
+
 VtObject& ObjectPool::add(VtObject object)
+{
+    return insert(m_objects.size(), std::move(object));
+}
+
+VtObject& ObjectPool::insert(std::size_t index, VtObject object)
 {
     if (object.id == kNullObjectId) {
         throw std::invalid_argument("Object ID 65535 is reserved as NULL Object ID");
@@ -58,22 +70,33 @@ VtObject& ObjectPool::add(VtObject object)
     if (contains(object.id)) {
         throw std::invalid_argument("Object ID " + std::to_string(object.id) + " is already in use");
     }
-    m_index.emplace(object.id, m_objects.size());
-    m_objects.push_back(std::move(object));
-    return m_objects.back();
+    index = std::min(index, m_objects.size());
+    m_objects.insert(m_objects.begin() + static_cast<std::ptrdiff_t>(index), std::move(object));
+    if (index + 1 == m_objects.size()) {
+        m_index.emplace(m_objects.back().id, index);
+    } else {
+        rebuildIndex();
+    }
+    return m_objects[index];
+}
+
+ObjectId ObjectPool::suggestId(ObjectType type) const
+{
+    if (type == ObjectType::WorkingSet && !contains(0)) {
+        return 0;
+    }
+    if (type == ObjectType::Macro) {
+        const ObjectId candidate = nextFreeId(kFirstMacroId);
+        if (candidate <= kLastEightBitMacroId) {
+            return candidate;
+        }
+    }
+    return nextFreeId(kFirstGeneralId);
 }
 
 VtObject& ObjectPool::create(ObjectType type, std::string name)
 {
-    ObjectId id = kNullObjectId;
-    if (type == ObjectType::WorkingSet && !contains(0)) {
-        id = 0;
-    } else if (type == ObjectType::Macro) {
-        const ObjectId candidate = nextFreeId(kFirstMacroId);
-        id = candidate <= kLastEightBitMacroId ? candidate : nextFreeId(kFirstGeneralId);
-    } else {
-        id = nextFreeId(kFirstGeneralId);
-    }
+    const ObjectId id = suggestId(type);
     if (id == kNullObjectId) {
         throw std::length_error("No free object ID left in the pool");
     }

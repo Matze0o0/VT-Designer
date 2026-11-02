@@ -2,12 +2,36 @@
   "version": 6,
   "configurePresets": [
     {
+      "name": "windows-mingw",
+      "displayName": "Windows MinGW + Qt 6.12 (editor, CLI, tests)",
+      "description": "Uses the MinGW toolchain shipped with Qt. Adjust the paths in a CMakeUserPresets.json if Qt lives elsewhere.",
+      "generator": "Ninja Multi-Config",
+      "binaryDir": "$env{USERPROFILE}/build/vt-designer/${presetName}",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "C:/Qt/Tools/mingw1310_64/bin/gcc.exe",
+        "CMAKE_CXX_COMPILER": "C:/Qt/Tools/mingw1310_64/bin/g++.exe",
+        "CMAKE_MAKE_PROGRAM": "C:/Qt/Tools/Ninja/ninja.exe",
+        "CMAKE_PREFIX_PATH": "C:/Qt/6.12.0/mingw_64"
+      },
+      "environment": {
+        "PATH": "C:/Qt/Tools/mingw1310_64/bin;C:/Qt/6.12.0/mingw_64/bin;$penv{PATH}"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
+    },
+    {
       "name": "windows-msvc",
-      "displayName": "Windows MSVC (Visual Studio 2026, x64)",
-      "description": "Build tree lives outside OneDrive to avoid sync conflicts.",
+      "displayName": "Windows MSVC (Visual Studio 2026, x64) - core, CLI and tests only",
+      "description": "The installed Qt kit is MinGW, so the editor is skipped here.",
       "generator": "Visual Studio 18 2026",
       "architecture": "x64",
       "binaryDir": "$env{USERPROFILE}/build/vt-designer/${presetName}",
+      "cacheVariables": {
+        "VTD_BUILD_APP": "OFF"
+      },
       "condition": {
         "type": "equals",
         "lhs": "${hostSystemName}",
@@ -16,28 +40,22 @@
     }
   ],
   "buildPresets": [
-    {
-      "name": "debug",
-      "configurePreset": "windows-msvc",
-      "configuration": "Debug"
-    },
-    {
-      "name": "release",
-      "configurePreset": "windows-msvc",
-      "configuration": "Release"
-    }
+    { "name": "debug", "configurePreset": "windows-mingw", "configuration": "Debug" },
+    { "name": "release", "configurePreset": "windows-mingw", "configuration": "Release" },
+    { "name": "msvc-debug", "configurePreset": "windows-msvc", "configuration": "Debug" },
+    { "name": "msvc-release", "configurePreset": "windows-msvc", "configuration": "Release" }
   ],
   "testPresets": [
     {
       "name": "debug",
-      "configurePreset": "windows-msvc",
+      "configurePreset": "windows-mingw",
       "configuration": "Debug",
       "output": { "outputOnFailure": true }
     },
     {
-      "name": "release",
+      "name": "msvc-debug",
       "configurePreset": "windows-msvc",
-      "configuration": "Release",
+      "configuration": "Debug",
       "output": { "outputOnFailure": true }
     }
   ]

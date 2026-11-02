@@ -2,6 +2,7 @@ add_library(vtcore STATIC
     src/Schema.cpp
     src/VtObject.cpp
     src/ObjectPool.cpp
+    src/PoolEditing.cpp
     src/IopCodec.cpp
     src/Hierarchy.cpp
     src/Validator.cpp

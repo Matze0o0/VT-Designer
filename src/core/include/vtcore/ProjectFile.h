@@ -13,10 +13,27 @@
 
 namespace vt {
 
+// Target terminal the designer previews the pool for (Data Mask area and Soft Key designators).
+struct DesignerSettings {
+    int dataMaskSize = 480;    // square Data Mask area in pixels (ISO 11783-6 4.5.2, minimum 200)
+    int softKeyWidth = 80;     // Soft Key designator width (minimum 60)
+    int softKeyHeight = 80;    // Soft Key designator height (minimum 32)
+    int physicalSoftKeys = 6;  // keys per column in the preview
+
+    bool operator==(const DesignerSettings&) const = default;
+};
+
 // A designer project: the object pool plus everything that is not part of the binary pool.
 struct Project {
+    Project() = default;
+    explicit Project(ObjectPool objectPool)
+        : pool(std::move(objectPool))
+    {
+    }
+
     ObjectPool pool;
     ExportOptions exportOptions;
+    DesignerSettings designer;
 };
 
 class ProjectError : public std::runtime_error {

@@ -83,7 +83,7 @@ bool isIopFile(const fs::path& path)
 vt::Project loadAny(const fs::path& path, vt::VtVersion version)
 {
     if (isIopFile(path)) {
-        vt::Project project{vt::decodePool(vt::readBinaryFile(path), version), {}};
+        vt::Project project(vt::decodePool(vt::readBinaryFile(path), version));
         project.exportOptions.poolName = path.stem().string();
         return project;
     }
@@ -137,7 +137,7 @@ int commandImport(const Arguments& args)
     }
     const fs::path input = args.files[0];
     const fs::path output = args.files[1];
-    vt::Project project{vt::decodePool(vt::readBinaryFile(input), args.version), {}};
+    vt::Project project(vt::decodePool(vt::readBinaryFile(input), args.version));
     project.exportOptions.poolName = input.stem().string();
     vt::saveProject(project, output);
     std::cout << "Imported " << project.pool.size() << " objects into " << output.string() << "\n";

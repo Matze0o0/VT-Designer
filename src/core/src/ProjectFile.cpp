@@ -431,6 +431,10 @@ std::string projectToJson(const Project& project)
     j["export"] = {{"poolName", project.exportOptions.poolName},
                    {"symbolPrefix", project.exportOptions.symbolPrefix},
                    {"headerStyle", headerStyleName(project.exportOptions.headerStyle)}};
+    j["designer"] = {{"dataMaskSize", project.designer.dataMaskSize},
+                     {"softKeyWidth", project.designer.softKeyWidth},
+                     {"softKeyHeight", project.designer.softKeyHeight},
+                     {"physicalSoftKeys", project.designer.physicalSoftKeys}};
     json objects = json::array();
     for (const VtObject& object : project.pool.objects()) {
         objects.push_back(objectToJson(object));
@@ -460,12 +464,21 @@ Project projectFromJson(std::string_view text)
             throw ProjectError("Unsupported VT version " + std::to_string(j.value("vtVersion", 0)));
         }
 
-        Project project{ObjectPool(*version), {}};
+        Project project{ObjectPool(*version)};
         if (j.contains("export")) {
             const json& e = j["export"];
             project.exportOptions.poolName = e.value("poolName", project.exportOptions.poolName);
             project.exportOptions.symbolPrefix = e.value("symbolPrefix", "");
             project.exportOptions.headerStyle = headerStyleFromName(e.value("headerStyle", "define"));
+        }
+        if (j.contains("designer")) {
+            const json& d = j["designer"];
+            DesignerSettings& s = project.designer;
+            s.dataMaskSize = checkedInteger<int>(d.value("dataMaskSize", json(s.dataMaskSize)), "dataMaskSize");
+            s.softKeyWidth = checkedInteger<int>(d.value("softKeyWidth", json(s.softKeyWidth)), "softKeyWidth");
+            s.softKeyHeight = checkedInteger<int>(d.value("softKeyHeight", json(s.softKeyHeight)), "softKeyHeight");
+            s.physicalSoftKeys =
+                checkedInteger<int>(d.value("physicalSoftKeys", json(s.physicalSoftKeys)), "physicalSoftKeys");
         }
         for (const json& object : j.value("objects", json::array())) {
             try {

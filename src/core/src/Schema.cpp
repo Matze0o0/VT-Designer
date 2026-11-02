@@ -353,7 +353,7 @@ std::vector<ObjectSchema> buildSchemas()
                     .u16("height", "Height", 2, 100)
                     .colour("colour", "Colour", 3, 2)
                     .colour("targetLineColour", "Target line colour", 4, 0)
-                    .u8("options", "Options", 5, 1, 0, 63)
+                    .u8("options", "Options", 5, 33, 0, 63) // border, grows upwards
                     .u8("numberOfTicks", "Number of ticks", 6, 0)
                     .u16("minValue", "Min value", 7, 0)
                     .u16("maxValue", "Max value", 8, 100)

@@ -3,6 +3,7 @@
 #include "vtcore/Types.h"
 #include "vtcore/VtObject.h"
 
+#include <optional>
 #include <span>
 #include <string_view>
 #include <unordered_map>
@@ -32,12 +33,17 @@ public:
     VtObject* find(ObjectId id);
     const VtObject* findByName(std::string_view name) const;
     const VtObject* workingSet() const;
+    std::optional<std::size_t> indexOf(ObjectId id) const;
 
     // Throws std::invalid_argument if the ID is NULL or already used.
     VtObject& add(VtObject object);
+    VtObject& insert(std::size_t index, VtObject object); // index is clamped to the pool size
 
-    // Creates an object with default attributes and an automatically chosen ID:
+    // ID for a new object of the given type:
     // Working Set -> 0, Macro -> lowest free ID in 0..255 (VT version 4 limit), others -> from 256.
+    ObjectId suggestId(ObjectType type) const;
+
+    // Creates an object with default attributes and the ID from suggestId().
     VtObject& create(ObjectType type, std::string name = {});
 
     bool remove(ObjectId id);

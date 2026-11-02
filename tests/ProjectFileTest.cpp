@@ -9,7 +9,7 @@ using namespace vt;
 
 TEST(ProjectFile, RoundTripKeepsPoolNamesAndOptions)
 {
-    Project project{test::minimalPool(VtVersion::V5), {}};
+    Project project{test::minimalPool(VtVersion::V5)};
     project.exportOptions.poolName = "sprayer";
     project.exportOptions.symbolPrefix = "VT_";
     project.exportOptions.headerStyle = HeaderStyle::Enum;
@@ -43,7 +43,7 @@ TEST(ProjectFile, RoundTripKeepsPoolNamesAndOptions)
 
 TEST(ProjectFile, EightBitTextKeepsEveryByte)
 {
-    Project project{test::minimalPool(), {}};
+    Project project{test::minimalPool()};
     project.pool.find(200)->data = {'D', 0xFC, 'n', 'g', 'e', 'r', 0xA4}; // "Dünger" + byte 0xA4
 
     const Project loaded = projectFromJson(projectToJson(project));
@@ -52,7 +52,7 @@ TEST(ProjectFile, EightBitTextKeepsEveryByte)
 
 TEST(ProjectFile, WideStringsAreStoredAsUnicodeText)
 {
-    Project project{test::minimalPool(), {}};
+    Project project{test::minimalPool()};
     // WideString "Ж€" with byte order mark, UTF-16 little endian.
     project.pool.find(200)->data = {0xFF, 0xFE, 0x16, 0x04, 0xAC, 0x20};
 

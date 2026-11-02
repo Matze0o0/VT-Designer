@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.25)
 
 project(VTDesigner
-    VERSION 0.1.0
+    VERSION 0.2.0
     DESCRIPTION "Graphical editor for ISOBUS virtual terminal object pools (ISO 11783-6)"
     LANGUAGES CXX)
 
@@ -11,6 +11,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 option(VTD_BUILD_TESTS "Build unit tests" ON)
 option(VTD_BUILD_CLI "Build the vtpool-cli command line tool" ON)
+option(VTD_BUILD_APP "Build the Qt editor (needs Qt 6 Widgets)" ON)
 
 include(FetchContent)
 
@@ -30,6 +31,17 @@ add_subdirectory(src/core)
 
 if(VTD_BUILD_CLI)
     add_subdirectory(src/cli)
+endif()
+
+if(VTD_BUILD_APP)
+    find_package(Qt6 6.5 COMPONENTS Widgets Test LinguistTools QUIET)
+    if(Qt6_FOUND)
+        qt_standard_project_setup()
+        add_subdirectory(src/render)
+        add_subdirectory(src/app)
+    else()
+        message(STATUS "Qt 6 not found - the editor is not built (set CMAKE_PREFIX_PATH to your Qt kit)")
+    endif()
 endif()
 
 if(VTD_BUILD_TESTS)

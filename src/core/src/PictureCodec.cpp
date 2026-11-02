@@ -2,6 +2,7 @@
 
 #include "vtcore/Palette.h"
 
+#include <algorithm>
 #include <stdexcept>
 #include <string>
 
@@ -134,7 +135,7 @@ std::vector<std::uint8_t> pictureIndices(const VtObject& picture)
 }
 
 void setPictureFromRgba(VtObject& picture, std::span<const std::uint8_t> rgba, int width, int height,
-                        PictureFormat format)
+                        PictureFormat format, bool dither)
 {
     checkDimensions(width, height);
     const std::size_t pixelCount = static_cast<std::size_t>(width) * static_cast<std::size_t>(height);
@@ -146,14 +147,47 @@ void setPictureFromRgba(VtObject& picture, std::span<const std::uint8_t> rgba, i
     const int maxIndex = maxIndexFor(format);
     bool hasTransparentPixels = false;
 
-    std::vector<std::uint8_t> indices(pixelCount);
+    // Working copy of the colour channels so dithering can carry the error forward.
+    std::vector<float> channels(pixelCount * 3);
     for (std::size_t i = 0; i < pixelCount; ++i) {
-        const std::uint8_t* px = rgba.data() + i * 4;
-        if (px[3] < 128) {
-            indices[i] = transparencyIndex;
-            hasTransparentPixels = true;
-        } else {
-            indices[i] = nearestColourIndex(px[0], px[1], px[2], maxIndex);
+        for (std::size_t c = 0; c < 3; ++c) {
+            channels[i * 3 + c] = rgba[i * 4 + c];
+        }
+    }
+
+    auto spread = [&](int x, int y, const float* error, float weight) {
+        if (x < 0 || x >= width || y >= height) {
+            return;
+        }
+        float* target = &channels[(static_cast<std::size_t>(y) * width + x) * 3];
+        for (int c = 0; c < 3; ++c) {
+            target[c] += error[c] * weight;
+        }
+    };
+
+    std::vector<std::uint8_t> indices(pixelCount);
+    for (int y = 0; y < height; ++y) {
+        for (int x = 0; x < width; ++x) {
+            const std::size_t i = static_cast<std::size_t>(y) * width + x;
+            if (rgba[i * 4 + 3] < 128) {
+                indices[i] = transparencyIndex;
+                hasTransparentPixels = true;
+                continue;
+            }
+            const float* px = &channels[i * 3];
+            auto clampByte = [](float v) { return static_cast<std::uint8_t>(std::clamp(v, 0.0f, 255.0f) + 0.5f); };
+            const std::uint8_t index = nearestColourIndex(clampByte(px[0]), clampByte(px[1]), clampByte(px[2]), maxIndex);
+            indices[i] = index;
+            if (dither) {
+                const std::uint32_t c = standardColour(index);
+                const float error[3] = {px[0] - static_cast<float>((c >> 16) & 0xFF),
+                                        px[1] - static_cast<float>((c >> 8) & 0xFF),
+                                        px[2] - static_cast<float>(c & 0xFF)};
+                spread(x + 1, y, error, 7.0f / 16);
+                spread(x - 1, y + 1, error, 3.0f / 16);
+                spread(x, y + 1, error, 5.0f / 16);
+                spread(x + 1, y + 1, error, 1.0f / 16);
+            }
         }
     }
 
