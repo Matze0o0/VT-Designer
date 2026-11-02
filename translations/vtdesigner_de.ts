@@ -1102,331 +1102,326 @@
 <context>
     <name>MainWindow</name>
     <message numerus="yes">
-        <location filename="../src/app/MainWindow.cpp" line="99" />
+        <location filename="../src/app/MainWindow.cpp" line="117" />
         <source>%n error(s)</source>
         <translation><numerusform>%n Fehler</numerusform><numerusform>%n Fehler</numerusform></translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/app/MainWindow.cpp" line="100" />
+        <location filename="../src/app/MainWindow.cpp" line="118" />
         <source>%n warning(s)</source>
         <translation><numerusform>%n Warnung</numerusform><numerusform>%n Warnungen</numerusform></translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="128" />
+        <location filename="../src/app/MainWindow.cpp" line="146" />
         <source>&amp;New</source>
         <translation>&amp;Neu</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="132" />
+        <location filename="../src/app/MainWindow.cpp" line="150" />
         <source>&amp;Open…</source>
         <translation>Ö&amp;ffnen…</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="136" />
+        <location filename="../src/app/MainWindow.cpp" line="154" />
         <source>&amp;Save</source>
         <translation>&amp;Speichern</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="140" />
+        <location filename="../src/app/MainWindow.cpp" line="158" />
         <source>Save &amp;as…</source>
         <translation>Speichern &amp;unter…</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="144" />
+        <location filename="../src/app/MainWindow.cpp" line="162" />
         <source>&amp;Export pool…</source>
         <translation>Pool &amp;exportieren…</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="146" />
+        <location filename="../src/app/MainWindow.cpp" line="164" />
         <source>Write .iop file, ID header and C array</source>
         <translation>.iop-Datei, ID-Header und C-Array schreiben</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="149" />
+        <location filename="../src/app/MainWindow.cpp" line="167" />
         <source>&amp;Quit</source>
         <translation>&amp;Beenden</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="153" />
+        <location filename="../src/app/MainWindow.cpp" line="171" />
         <source>&amp;Undo</source>
         <translation>&amp;Rückgängig</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="155" />
+        <location filename="../src/app/MainWindow.cpp" line="173" />
         <source>&amp;Redo</source>
         <translation>&amp;Wiederholen</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="158" />
+        <location filename="../src/app/MainWindow.cpp" line="176" />
         <source>&amp;Copy</source>
         <translation>&amp;Kopieren</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="162" />
+        <location filename="../src/app/MainWindow.cpp" line="180" />
         <source>&amp;Paste</source>
         <translation>E&amp;infügen</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="166" />
+        <location filename="../src/app/MainWindow.cpp" line="184" />
         <source>D&amp;uplicate</source>
         <translation>&amp;Duplizieren</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="170" />
+        <location filename="../src/app/MainWindow.cpp" line="188" />
         <source>&amp;Delete</source>
         <translation>&amp;Löschen</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="172" />
+        <location filename="../src/app/MainWindow.cpp" line="190" />
         <source>Remove the selected object from its parent</source>
         <translation>Ausgewähltes Objekt aus seinem Elternobjekt entfernen</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="175" />
+        <location filename="../src/app/MainWindow.cpp" line="193" />
         <source>Bring to &amp;front</source>
         <translation>In den &amp;Vordergrund</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="179" />
+        <location filename="../src/app/MainWindow.cpp" line="197" />
         <source>Send to &amp;back</source>
         <translation>In den &amp;Hintergrund</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="183" />
+        <location filename="../src/app/MainWindow.cpp" line="201" />
         <source>Zoom &amp;in</source>
         <translation>Ver&amp;größern</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="187" />
+        <location filename="../src/app/MainWindow.cpp" line="205" />
         <source>Zoom &amp;out</source>
         <translation>Ver&amp;kleinern</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="191" />
+        <location filename="../src/app/MainWindow.cpp" line="209" />
         <source>&amp;Actual size</source>
         <translation>&amp;Originalgröße</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="195" />
+        <location filename="../src/app/MainWindow.cpp" line="213" />
         <source>&amp;Fit to window</source>
         <translation>An &amp;Fenster anpassen</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="199" />
+        <location filename="../src/app/MainWindow.cpp" line="217" />
         <source>Show &amp;grid</source>
         <translation>&amp;Raster anzeigen</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="204" />
+        <location filename="../src/app/MainWindow.cpp" line="222" />
         <source>&amp;Snap to grid</source>
         <translation>Am Raster &amp;ausrichten</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="209" />
+        <location filename="../src/app/MainWindow.cpp" line="227" />
         <source>Pool &amp;settings…</source>
         <translation>Pool-&amp;Einstellungen…</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="212" />
+        <location filename="../src/app/MainWindow.cpp" line="230" />
         <source>&amp;About VT-Designer</source>
         <translation>&amp;Über VT-Designer</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="214" />
+        <location filename="../src/app/MainWindow.cpp" line="232" />
         <source>About VT-Designer</source>
         <translation>Über VT-Designer</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="215" />
+        <location filename="../src/app/MainWindow.cpp" line="233" />
         <source>&lt;h3&gt;VT-Designer %1&lt;/h3&gt;&lt;p&gt;Graphical editor for ISOBUS virtual terminal object pools (ISO 11783-6, VT version 3 to 5).&lt;/p&gt;&lt;p&gt;Built with Qt %2.&lt;/p&gt;</source>
         <translation>&lt;h3&gt;VT-Designer %1&lt;/h3&gt;&lt;p&gt;Grafischer Editor für ISOBUS-Objektpools für Virtual Terminals (ISO 11783-6, VT-Version 3 bis 5).&lt;/p&gt;&lt;p&gt;Erstellt mit Qt %2.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="223" />
+        <location filename="../src/app/MainWindow.cpp" line="241" />
         <source>&amp;File</source>
         <translation>&amp;Datei</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="230" />
+        <location filename="../src/app/MainWindow.cpp" line="248" />
         <source>&amp;Edit</source>
         <translation>&amp;Bearbeiten</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="237" />
+        <location filename="../src/app/MainWindow.cpp" line="255" />
         <source>&amp;View</source>
         <translation>&amp;Ansicht</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="246" />
+        <location filename="../src/app/MainWindow.cpp" line="264" />
         <source>&amp;Pool</source>
         <translation>&amp;Pool</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="249" />
+        <location filename="../src/app/MainWindow.cpp" line="267" />
         <source>&amp;Help</source>
         <translation>&amp;Hilfe</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="252" />
+        <location filename="../src/app/MainWindow.cpp" line="270" />
         <source>Main</source>
         <translation>Haupt</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="258" />
+        <location filename="../src/app/MainWindow.cpp" line="276" />
         <source> View: </source>
         <translation> Ansicht: </translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="287" />
-        <source>Toolbox</source>
-        <translation>Werkzeuge</translation>
-    </message>
-    <message>
-        <location filename="../src/app/MainWindow.cpp" line="288" />
+        <location filename="../src/app/MainWindow.cpp" line="304" />
         <source>Pool</source>
         <translation>Pool</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="289" />
+        <location filename="../src/app/MainWindow.cpp" line="305" />
         <source>Properties</source>
         <translation>Eigenschaften</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="290" />
+        <location filename="../src/app/MainWindow.cpp" line="306" />
         <source>Problems</source>
         <translation>Probleme</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="291" />
+        <location filename="../src/app/MainWindow.cpp" line="307" />
         <source>History</source>
         <translation>Verlauf</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="363" />
+        <location filename="../src/app/MainWindow.cpp" line="377" />
         <source>Unsaved changes</source>
         <translation>Ungespeicherte Änderungen</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="364" />
+        <location filename="../src/app/MainWindow.cpp" line="378" />
         <source>Do you want to save the changes to %1?</source>
         <translation>Möchtest du die Änderungen an %1 speichern?</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="398" />
-        <location filename="../src/app/MainWindow.cpp" line="428" />
+        <location filename="../src/app/MainWindow.cpp" line="412" />
+        <location filename="../src/app/MainWindow.cpp" line="442" />
         <source>Open</source>
         <translation>Öffnen</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="399" />
+        <location filename="../src/app/MainWindow.cpp" line="413" />
         <source>VT-Designer projects (*.vtp);;ISOBUS object pools (*.iop);;All files (*)</source>
         <translation>VT-Designer-Projekte (*.vtp);;ISOBUS-Objektpools (*.iop);;Alle Dateien (*)</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="413" />
+        <location filename="../src/app/MainWindow.cpp" line="427" />
         <source>Import object pool</source>
         <translation>Objektpool importieren</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="414" />
+        <location filename="../src/app/MainWindow.cpp" line="428" />
         <source>VT version the pool was made for:</source>
         <translation>VT-Version, für die der Pool erstellt wurde:</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="422" />
+        <location filename="../src/app/MainWindow.cpp" line="436" />
         <source>Imported %1 objects from %2</source>
         <translation>%1 Objekte aus %2 importiert</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="428" />
+        <location filename="../src/app/MainWindow.cpp" line="442" />
         <source>%1 could not be opened:
 %2</source>
         <translation>%1 konnte nicht geöffnet werden:
 %2</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="441" />
+        <location filename="../src/app/MainWindow.cpp" line="455" />
         <source>Saved %1</source>
         <translation>%1 gespeichert</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="444" />
+        <location filename="../src/app/MainWindow.cpp" line="458" />
         <source>Save</source>
         <translation>Speichern</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="458" />
+        <location filename="../src/app/MainWindow.cpp" line="472" />
         <source>Save as</source>
         <translation>Speichern unter</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="458" />
+        <location filename="../src/app/MainWindow.cpp" line="472" />
         <source>VT-Designer projects (*.vtp)</source>
         <translation>VT-Designer-Projekte (*.vtp)</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="476" />
-        <location filename="../src/app/MainWindow.cpp" line="506" />
+        <location filename="../src/app/MainWindow.cpp" line="490" />
+        <location filename="../src/app/MainWindow.cpp" line="520" />
         <source>Export</source>
         <translation>Export</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/app/MainWindow.cpp" line="477" />
+        <location filename="../src/app/MainWindow.cpp" line="491" />
         <source>The pool has %n error(s). Please fix them first (see Problems).</source>
         <translation><numerusform>Der Pool hat %n Fehler. Bitte zuerst beheben (siehe Probleme).</numerusform><numerusform>Der Pool hat %n Fehler. Bitte zuerst beheben (siehe Probleme).</numerusform></translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="486" />
+        <location filename="../src/app/MainWindow.cpp" line="500" />
         <source>Export pool to folder</source>
         <translation>Pool in Ordner exportieren</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="500" />
+        <location filename="../src/app/MainWindow.cpp" line="514" />
         <source>Exported %1 (%2 bytes) with ID header and C array to %3</source>
         <translation>%1 (%2 Bytes) mit ID-Header und C-Array nach %3 exportiert</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="551" />
+        <location filename="../src/app/MainWindow.cpp" line="565" />
         <source>Add %1</source>
         <translation>%1 hinzufügen</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="577" />
+        <location filename="../src/app/MainWindow.cpp" line="591" />
         <source>%1 was added to the pool without a position. Drag it from the toolbox onto a mask to place it.</source>
         <translation>%1 wurde ohne Position zum Pool hinzugefügt. Zum Platzieren aus den Werkzeugen auf eine Maske ziehen.</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="615" />
+        <location filename="../src/app/MainWindow.cpp" line="629" />
         <source>Copied %1</source>
         <translation>%1 kopiert</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="650" />
+        <location filename="../src/app/MainWindow.cpp" line="664" />
         <source>Paste %1</source>
         <translation>%1 einfügen</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="668" />
+        <location filename="../src/app/MainWindow.cpp" line="682" />
         <source>Remove %1</source>
         <translation>%1 entfernen</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="682" />
+        <location filename="../src/app/MainWindow.cpp" line="696" />
         <source>Delete %1 from the pool?</source>
         <translation>%1 aus dem Pool löschen?</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/app/MainWindow.cpp" line="684" />
+        <location filename="../src/app/MainWindow.cpp" line="698" />
         <source>It is referenced by %n object(s); these references are removed.</source>
         <translation><numerusform>Es wird von %n Objekt referenziert; diese Referenz wird entfernt.</numerusform><numerusform>Es wird von %n Objekten referenziert; diese Referenzen werden entfernt.</numerusform></translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="687" />
+        <location filename="../src/app/MainWindow.cpp" line="701" />
         <source>Delete object</source>
         <translation>Objekt löschen</translation>
     </message>
     <message>
-        <location filename="../src/app/MainWindow.cpp" line="690" />
+        <location filename="../src/app/MainWindow.cpp" line="704" />
         <source>Delete %1</source>
         <translation>%1 löschen</translation>
     </message>
@@ -1434,34 +1429,262 @@
 <context>
     <name>MaskCanvas</name>
     <message>
-        <location filename="../src/app/MaskCanvas.cpp" line="261" />
-        <source>Open a mask from the pool tree or drop a Data Mask from the toolbox.</source>
-        <translation>Öffne eine Maske im Pool-Baum oder ziehe eine Data Mask aus den Werkzeugen hierher.</translation>
+        <location filename="../src/app/MaskCanvas.cpp" line="263" />
+        <source>Open a mask from the pool tree or drag a Data Mask from the object bar above.</source>
+        <translation>Öffne eine Maske im Pool-Baum oder ziehe eine Data Mask aus der Objektleiste oben hierher.</translation>
     </message>
     <message>
-        <location filename="../src/app/MaskCanvas.cpp" line="439" />
+        <location filename="../src/app/MaskCanvas.cpp" line="461" />
         <source>Move %1</source>
         <translation>%1 verschieben</translation>
     </message>
     <message>
-        <location filename="../src/app/MaskCanvas.cpp" line="485" />
+        <location filename="../src/app/MaskCanvas.cpp" line="507" />
         <source>Resize %1</source>
         <translation>Größe von %1 ändern</translation>
     </message>
     <message>
-        <location filename="../src/app/MaskCanvas.cpp" line="504" />
+        <location filename="../src/app/MaskCanvas.cpp" line="526" />
         <source>Move</source>
         <translation>Verschieben</translation>
     </message>
     <message>
-        <location filename="../src/app/MaskCanvas.cpp" line="524" />
+        <location filename="../src/app/MaskCanvas.cpp" line="546" />
         <source>Bring to front</source>
         <translation>In den Vordergrund</translation>
     </message>
     <message>
-        <location filename="../src/app/MaskCanvas.cpp" line="524" />
+        <location filename="../src/app/MaskCanvas.cpp" line="546" />
         <source>Send to back</source>
         <translation>In den Hintergrund</translation>
+    </message>
+</context>
+<context>
+    <name>ObjectDescription</name>
+    <message>
+        <location filename="../src/app/ObjectIcons.cpp" line="564" />
+        <source>Describes the implement. Its child objects form the Working Set designator shown in the VT's Working Set selection.</source>
+        <translation>Beschreibt das Anbaugerät. Seine Kindobjekte bilden das Symbol, das das VT in der Working-Set-Auswahl zeigt.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/ObjectIcons.cpp" line="565" />
+        <source>A screen page in the Data Mask area. Contains the visible objects and refers to a Soft Key Mask.</source>
+        <translation>Eine Bildschirmseite im Data-Mask-Bereich. Enthält die sichtbaren Objekte und verweist auf eine Soft Key Mask.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/ObjectIcons.cpp" line="566" />
+        <source>A screen page for alarms with priority and acoustic signal; shown on top of the Data Mask.</source>
+        <translation>Eine Bildschirmseite für Alarme mit Priorität und akustischem Signal; wird über der Data Mask angezeigt.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/ObjectIcons.cpp" line="567" />
+        <source>Groups objects so they can be moved, hidden and shown together.</source>
+        <translation>Fasst Objekte zusammen, damit sie gemeinsam verschoben, ausgeblendet und eingeblendet werden können.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/ObjectIcons.cpp" line="568" />
+        <source>The set of Soft Keys shown next to a Data or Alarm Mask.</source>
+        <translation>Die Soft Keys, die neben einer Data oder Alarm Mask angezeigt werden.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/ObjectIcons.cpp" line="569" />
+        <source>A Soft Key. Its child objects form the key designator; pressing it sends the key code.</source>
+        <translation>Ein Soft Key. Seine Kindobjekte bilden die Tastenbeschriftung; ein Druck sendet den Tastencode.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/ObjectIcons.cpp" line="570" />
+        <source>A button inside a mask, operated by touch or navigation.</source>
+        <translation>Eine Schaltfläche in einer Maske, bedienbar per Touch oder Navigation.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/ObjectIcons.cpp" line="571" />
+        <source>Check box for an on/off value.</source>
+        <translation>Kontrollkästchen für einen Ein/Aus-Wert.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/ObjectIcons.cpp" line="572" />
+        <source>Text input field.</source>
+        <translation>Eingabefeld für Text.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/ObjectIcons.cpp" line="573" />
+        <source>Numeric input field with scaling, offset and limits.</source>
+        <translation>Eingabefeld für Zahlen mit Skalierung, Offset und Grenzen.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/ObjectIcons.cpp" line="574" />
+        <source>Selection from a list of objects.</source>
+        <translation>Auswahl aus einer Liste von Objekten.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/ObjectIcons.cpp" line="575" />
+        <source>Displays a text.</source>
+        <translation>Zeigt einen Text an.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/ObjectIcons.cpp" line="576" />
+        <source>Displays a number with scaling, offset and decimals.</source>
+        <translation>Zeigt eine Zahl mit Skalierung, Offset und Nachkommastellen an.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/ObjectIcons.cpp" line="577" />
+        <source>Displays one object of a list, selected by a value.</source>
+        <translation>Zeigt ein Objekt aus einer Liste an, ausgewählt über einen Wert.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/ObjectIcons.cpp" line="578" />
+        <source>A straight line.</source>
+        <translation>Eine gerade Linie.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/ObjectIcons.cpp" line="579" />
+        <source>A rectangle or square, optionally filled.</source>
+        <translation>Ein Rechteck oder Quadrat, wahlweise gefüllt.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/ObjectIcons.cpp" line="580" />
+        <source>An ellipse, circle, arc, segment or section.</source>
+        <translation>Eine Ellipse, ein Kreis, Bogen, Segment oder Sektor.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/ObjectIcons.cpp" line="581" />
+        <source>A polygon defined by a list of points.</source>
+        <translation>Ein Polygon aus einer Liste von Punkten.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/ObjectIcons.cpp" line="582" />
+        <source>A round gauge with a needle.</source>
+        <translation>Ein rundes Zeigerinstrument.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/ObjectIcons.cpp" line="583" />
+        <source>A horizontal or vertical bar graph with optional target line.</source>
+        <translation>Ein waagerechter oder senkrechter Balken mit optionaler Ziellinie.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/ObjectIcons.cpp" line="584" />
+        <source>A bar graph along an arc.</source>
+        <translation>Ein Balken entlang eines Bogens.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/ObjectIcons.cpp" line="585" />
+        <source>A bitmap picture with 2, 16 or 256 colours. Importing an image starts when it is added.</source>
+        <translation>Ein Bitmap-Bild mit 2, 16 oder 256 Farben. Beim Hinzufügen startet der Bildimport.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/ObjectIcons.cpp" line="586" />
+        <source>Stores a 32-bit value that number fields, lists and graphs can show.</source>
+        <translation>Speichert einen 32-Bit-Wert, den Zahlenfelder, Listen und Grafiken anzeigen können.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/ObjectIcons.cpp" line="587" />
+        <source>Stores a text that string fields can show.</source>
+        <translation>Speichert einen Text, den Textfelder anzeigen können.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/ObjectIcons.cpp" line="588" />
+        <source>Font colour, size, character set and style for text objects.</source>
+        <translation>Schriftfarbe, -größe, Zeichensatz und Stil für Textobjekte.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/ObjectIcons.cpp" line="589" />
+        <source>Line colour, width and pattern for shapes.</source>
+        <translation>Linienfarbe, -breite und -muster für Formen.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/ObjectIcons.cpp" line="590" />
+        <source>Fill type, colour or pattern for shapes.</source>
+        <translation>Füllart, -farbe oder -muster für Formen.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/ObjectIcons.cpp" line="591" />
+        <source>Characters that are allowed or forbidden in a text input.</source>
+        <translation>Zeichen, die in einer Texteingabe erlaubt oder verboten sind.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/ObjectIcons.cpp" line="592" />
+        <source>Shows the object it points to; the target can be changed at runtime.</source>
+        <translation>Zeigt das Objekt, auf das er verweist; das Ziel kann zur Laufzeit geändert werden.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/ObjectIcons.cpp" line="593" />
+        <source>A list of commands the VT executes when an event occurs.</source>
+        <translation>Eine Liste von Befehlen, die das VT bei einem Ereignis ausführt.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/ObjectIcons.cpp" line="594" />
+        <source>Auxiliary function of type 1 (obsolete, only kept for compatibility).</source>
+        <translation>Auxiliary Function Typ 1 (veraltet, nur aus Kompatibilitätsgründen).</translation>
+    </message>
+    <message>
+        <location filename="../src/app/ObjectIcons.cpp" line="595" />
+        <source>Auxiliary input of type 1 (obsolete, only kept for compatibility).</source>
+        <translation>Auxiliary Input Typ 1 (veraltet, nur aus Kompatibilitätsgründen).</translation>
+    </message>
+    <message>
+        <location filename="../src/app/ObjectIcons.cpp" line="596" />
+        <source>A function of the implement that the operator can assign to an auxiliary input.</source>
+        <translation>Eine Gerätefunktion, die der Fahrer einem Auxiliary Input zuweisen kann.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/ObjectIcons.cpp" line="597" />
+        <source>An auxiliary input control, e.g. a joystick button.</source>
+        <translation>Ein Auxiliary-Bedienelement, z. B. eine Joystick-Taste.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/ObjectIcons.cpp" line="598" />
+        <source>Shows the designator of an auxiliary function or input, e.g. the current assignment.</source>
+        <translation>Zeigt das Symbol einer Auxiliary Function oder eines Auxiliary Input, z. B. die aktuelle Zuweisung.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/ObjectIcons.cpp" line="599" />
+        <source>A window for user-layout Data Masks that the operator can arrange.</source>
+        <translation>Ein Fenster für User-Layout-Masken, das der Fahrer anordnen kann.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/ObjectIcons.cpp" line="600" />
+        <source>A group of keys for user-layout Soft Key Masks.</source>
+        <translation>Eine Tastengruppe für User-Layout-Soft-Key-Masken.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/ObjectIcons.cpp" line="601" />
+        <source>A drawing canvas the implement paints on with graphics commands.</source>
+        <translation>Eine Zeichenfläche, auf die das Gerät mit Grafikbefehlen zeichnet.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/ObjectIcons.cpp" line="602" />
+        <source>Unicode character ranges that are allowed or forbidden in a text input.</source>
+        <translation>Unicode-Zeichenbereiche, die in einer Texteingabe erlaubt oder verboten sind.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/ObjectIcons.cpp" line="603" />
+        <source>Maps colour indices to other palette colours, e.g. for a night mode.</source>
+        <translation>Ordnet Farbindizes anderen Palettenfarben zu, z. B. für einen Nachtmodus.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/ObjectIcons.cpp" line="604" />
+        <source>Names and symbols for objects, used by the VT in user-layout screens.</source>
+        <translation>Namen und Symbole für Objekte, die das VT in User-Layout-Ansichten verwendet.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/ObjectIcons.cpp" line="605" />
+        <source>Lists objects that other Working Sets may show.</source>
+        <translation>Listet Objekte auf, die andere Working Sets anzeigen dürfen.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/ObjectIcons.cpp" line="606" />
+        <source>Identifies another Working Set by its NAME.</source>
+        <translation>Bezeichnet ein anderes Working Set über seinen NAME.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/ObjectIcons.cpp" line="607" />
+        <source>Shows an object of another Working Set.</source>
+        <translation>Zeigt ein Objekt eines anderen Working Sets.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/ObjectIcons.cpp" line="608" />
+        <source>Shows its child objects one after another.</source>
+        <translation>Zeigt seine Kindobjekte nacheinander an.</translation>
     </message>
 </context>
 <context>
@@ -1536,6 +1759,19 @@
         <location filename="../src/app/ObjectFactory.cpp" line="302" />
         <source>PNG image (*.png)</source>
         <translation>PNG-Bild (*.png)</translation>
+    </message>
+</context>
+<context>
+    <name>ObjectPalette</name>
+    <message>
+        <location filename="../src/app/ObjectPalette.cpp" line="47" />
+        <source>Drag onto a mask, or click to insert into the selected object.</source>
+        <translation>Auf eine Maske ziehen oder klicken, um es in das ausgewählte Objekt einzufügen.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/ObjectPalette.cpp" line="50" />
+        <source>Requires VT version %1 (see Pool settings).</source>
+        <translation>Erfordert VT-Version %1 (siehe Pool-Einstellungen).</translation>
     </message>
 </context>
 <context>
@@ -1769,32 +2005,32 @@
 <context>
     <name>PoolTree</name>
     <message>
-        <location filename="../src/app/PoolTree.cpp" line="46" />
+        <location filename="../src/app/PoolTree.cpp" line="47" />
         <source>Masks</source>
         <translation>Masken</translation>
     </message>
     <message>
-        <location filename="../src/app/PoolTree.cpp" line="47" />
+        <location filename="../src/app/PoolTree.cpp" line="48" />
         <source>Objects</source>
         <translation>Objekte</translation>
     </message>
     <message>
-        <location filename="../src/app/PoolTree.cpp" line="89" />
+        <location filename="../src/app/PoolTree.cpp" line="92" />
         <source> (circular)</source>
         <translation> (zirkulär)</translation>
     </message>
     <message>
-        <location filename="../src/app/PoolTree.cpp" line="108" />
+        <location filename="../src/app/PoolTree.cpp" line="111" />
         <source>Soft keys: %1</source>
         <translation>Soft Keys: %1</translation>
     </message>
     <message>
-        <location filename="../src/app/PoolTree.cpp" line="268" />
+        <location filename="../src/app/PoolTree.cpp" line="273" />
         <source>Open in canvas</source>
         <translation>Auf Zeichenfläche öffnen</translation>
     </message>
     <message>
-        <location filename="../src/app/PoolTree.cpp" line="271" />
+        <location filename="../src/app/PoolTree.cpp" line="276" />
         <source>Delete object from pool</source>
         <translation>Objekt aus Pool löschen</translation>
     </message>
@@ -1820,288 +2056,288 @@
 <context>
     <name>PropertyEditor</name>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="109" />
+        <location filename="../src/app/PropertyEditor.cpp" line="110" />
         <source>Property</source>
         <translation>Eigenschaft</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="109" />
+        <location filename="../src/app/PropertyEditor.cpp" line="110" />
         <source>Value</source>
         <translation>Wert</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="144" />
-        <location filename="../src/app/PropertyEditor.cpp" line="850" />
+        <location filename="../src/app/PropertyEditor.cpp" line="146" />
+        <location filename="../src/app/PropertyEditor.cpp" line="854" />
         <source>Change %1</source>
         <translation>%1 ändern</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="200" />
+        <location filename="../src/app/PropertyEditor.cpp" line="202" />
         <source>Select an object on the canvas or in the pool tree.</source>
         <translation>Wähle ein Objekt auf der Zeichenfläche oder im Pool-Baum aus.</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="218" />
+        <location filename="../src/app/PropertyEditor.cpp" line="222" />
         <source>used as symbol in the ID header</source>
         <translation>wird als Symbol im ID-Header verwendet</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="225" />
+        <location filename="../src/app/PropertyEditor.cpp" line="229" />
         <source>Rename object</source>
         <translation>Objekt umbenennen</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="228" />
+        <location filename="../src/app/PropertyEditor.cpp" line="232" />
         <source>Name</source>
         <translation>Name</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="244" />
-        <location filename="../src/app/PropertyEditor.cpp" line="251" />
+        <location filename="../src/app/PropertyEditor.cpp" line="248" />
+        <location filename="../src/app/PropertyEditor.cpp" line="255" />
         <source>Object ID</source>
         <translation>Objekt-ID</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="244" />
+        <location filename="../src/app/PropertyEditor.cpp" line="248" />
         <source>The object ID %1 is already in use.</source>
         <translation>Die Objekt-ID %1 ist bereits vergeben.</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="265" />
+        <location filename="../src/app/PropertyEditor.cpp" line="269" />
         <source>Position in %1</source>
         <translation>Position in %1</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="282" />
+        <location filename="../src/app/PropertyEditor.cpp" line="286" />
         <source>Move object</source>
         <translation>Objekt verschieben</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="284" />
-        <location filename="../src/app/PropertyEditor.cpp" line="768" />
-        <location filename="../src/app/PropertyEditor.cpp" line="782" />
+        <location filename="../src/app/PropertyEditor.cpp" line="288" />
+        <location filename="../src/app/PropertyEditor.cpp" line="772" />
+        <location filename="../src/app/PropertyEditor.cpp" line="786" />
         <source>X</source>
         <translation>X</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="284" />
-        <location filename="../src/app/PropertyEditor.cpp" line="769" />
-        <location filename="../src/app/PropertyEditor.cpp" line="782" />
+        <location filename="../src/app/PropertyEditor.cpp" line="288" />
+        <location filename="../src/app/PropertyEditor.cpp" line="773" />
+        <location filename="../src/app/PropertyEditor.cpp" line="786" />
         <source>Y</source>
         <translation>Y</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="302" />
+        <location filename="../src/app/PropertyEditor.cpp" line="306" />
         <source>Attributes</source>
         <translation>Attribute</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="309" />
+        <location filename="../src/app/PropertyEditor.cpp" line="313" />
         <source> (AID %1)</source>
         <translation> (AID %1)</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="408" />
-        <location filename="../src/app/PropertyEditor.cpp" line="512" />
+        <location filename="../src/app/PropertyEditor.cpp" line="412" />
+        <location filename="../src/app/PropertyEditor.cpp" line="516" />
         <source>(none)</source>
         <translation>(keins)</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="468" />
+        <location filename="../src/app/PropertyEditor.cpp" line="472" />
         <source>Select the referenced object</source>
         <translation>Referenziertes Objekt auswählen</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="494" />
+        <location filename="../src/app/PropertyEditor.cpp" line="498" />
         <source>New %1</source>
         <translation>Neues Objekt: %1</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="520" />
+        <location filename="../src/app/PropertyEditor.cpp" line="524" />
         <source>%1 (missing)</source>
         <translation>%1 (fehlt)</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="526" />
+        <location filename="../src/app/PropertyEditor.cpp" line="530" />
         <source>New %1…</source>
         <translation>Neu: %1…</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="547" />
+        <location filename="../src/app/PropertyEditor.cpp" line="551" />
         <source>Content</source>
         <translation>Inhalt</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="553" />
+        <location filename="../src/app/PropertyEditor.cpp" line="557" />
         <source>Characters</source>
         <translation>Zeichen</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="553" />
-        <location filename="../src/app/PropertyEditor.cpp" line="643" />
-        <location filename="../src/app/PropertyEditor.cpp" line="786" />
+        <location filename="../src/app/PropertyEditor.cpp" line="557" />
+        <location filename="../src/app/PropertyEditor.cpp" line="647" />
+        <location filename="../src/app/PropertyEditor.cpp" line="790" />
         <source>Text</source>
         <translation>Text</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="559" />
+        <location filename="../src/app/PropertyEditor.cpp" line="563" />
         <source>Commands (hex)</source>
         <translation>Befehle (hex)</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="559" />
+        <location filename="../src/app/PropertyEditor.cpp" line="563" />
         <source>Data (hex)</source>
         <translation>Daten (hex)</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="573" />
+        <location filename="../src/app/PropertyEditor.cpp" line="577" />
         <source>Change languages</source>
         <translation>Sprachen ändern</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="576" />
+        <location filename="../src/app/PropertyEditor.cpp" line="580" />
         <source>Languages</source>
         <translation>Sprachen</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="588" />
+        <location filename="../src/app/PropertyEditor.cpp" line="592" />
         <source>Code planes</source>
         <translation>Code Planes</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="603" />
+        <location filename="../src/app/PropertyEditor.cpp" line="607" />
         <source>Child objects</source>
         <translation>Kindobjekte</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="603" />
+        <location filename="../src/app/PropertyEditor.cpp" line="607" />
         <source>Object references</source>
         <translation>Objektreferenzen</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="604" />
+        <location filename="../src/app/PropertyEditor.cpp" line="608" />
         <source>Points</source>
         <translation>Punkte</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="604" />
+        <location filename="../src/app/PropertyEditor.cpp" line="608" />
         <source>Labels</source>
         <translation>Labels</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="605" />
+        <location filename="../src/app/PropertyEditor.cpp" line="609" />
         <source>Macros</source>
         <translation>Makros</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="612" />
+        <location filename="../src/app/PropertyEditor.cpp" line="616" />
         <source>Soft keys</source>
         <translation>Soft Keys</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="614" />
+        <location filename="../src/app/PropertyEditor.cpp" line="618" />
         <source>List items</source>
         <translation>Listeneinträge</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="644" />
+        <location filename="../src/app/PropertyEditor.cpp" line="648" />
         <source>The text contains characters that the selected font type cannot show.</source>
         <translation>Der Text enthält Zeichen, die der gewählte Zeichensatz nicht darstellen kann.</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="650" />
+        <location filename="../src/app/PropertyEditor.cpp" line="654" />
         <source>Change text</source>
         <translation>Text ändern</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="657" />
+        <location filename="../src/app/PropertyEditor.cpp" line="661" />
         <source>Stored as WideString (UTF-16)</source>
         <translation>Gespeichert als WideString (UTF-16)</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/app/PropertyEditor.cpp" line="658" />
+        <location filename="../src/app/PropertyEditor.cpp" line="662" />
         <source>Stored as 8-bit string (%n byte(s))</source>
         <translation><numerusform>Gespeichert als 8-Bit-String (%n Byte)</numerusform><numerusform>Gespeichert als 8-Bit-String (%n Bytes)</numerusform></translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="679" />
+        <location filename="../src/app/PropertyEditor.cpp" line="683" />
         <source>Change data</source>
         <translation>Daten ändern</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="700" />
+        <location filename="../src/app/PropertyEditor.cpp" line="704" />
         <source>Import image…</source>
         <translation>Bild importieren…</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="701" />
+        <location filename="../src/app/PropertyEditor.cpp" line="705" />
         <source>Export image…</source>
         <translation>Bild exportieren…</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="711" />
+        <location filename="../src/app/PropertyEditor.cpp" line="715" />
         <source>Import image</source>
         <translation>Bild importieren</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="733" />
+        <location filename="../src/app/PropertyEditor.cpp" line="737" />
         <source>monochrome</source>
         <translation>monochrom</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="733" />
+        <location filename="../src/app/PropertyEditor.cpp" line="737" />
         <source>16 colours</source>
         <translation>16 Farben</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="733" />
+        <location filename="../src/app/PropertyEditor.cpp" line="737" />
         <source>256 colours</source>
         <translation>256 Farben</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="734" />
+        <location filename="../src/app/PropertyEditor.cpp" line="738" />
         <source>%1 × %2 px, %3, %4 bytes%5</source>
         <translation>%1 × %2 px, %3, %4 Bytes%5</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="740" />
+        <location filename="../src/app/PropertyEditor.cpp" line="744" />
         <source> (RLE)</source>
         <translation> (RLE)</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="767" />
-        <location filename="../src/app/PropertyEditor.cpp" line="774" />
-        <location filename="../src/app/PropertyEditor.cpp" line="785" />
+        <location filename="../src/app/PropertyEditor.cpp" line="771" />
+        <location filename="../src/app/PropertyEditor.cpp" line="778" />
+        <location filename="../src/app/PropertyEditor.cpp" line="789" />
         <source>Object</source>
         <translation>Objekt</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="779" />
+        <location filename="../src/app/PropertyEditor.cpp" line="783" />
         <source>Event</source>
         <translation>Ereignis</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="779" />
+        <location filename="../src/app/PropertyEditor.cpp" line="783" />
         <source>Macro</source>
         <translation>Makro</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="787" />
+        <location filename="../src/app/PropertyEditor.cpp" line="791" />
         <source>Font type</source>
         <translation>Zeichensatz</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="788" />
+        <location filename="../src/app/PropertyEditor.cpp" line="792" />
         <source>Graphic</source>
         <translation>Grafik</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="862" />
+        <location filename="../src/app/PropertyEditor.cpp" line="866" />
         <source>Used by</source>
         <translation>Verwendet von</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="874" />
+        <location filename="../src/app/PropertyEditor.cpp" line="878" />
         <source>&lt;i&gt;not referenced by any object&lt;/i&gt;</source>
         <translation>&lt;i&gt;von keinem Objekt referenziert&lt;/i&gt;</translation>
     </message>
@@ -2219,64 +2455,6 @@
         <location filename="../src/app/SettingsDialog.cpp" line="126" />
         <source>The new language is used after restarting VT-Designer.</source>
         <translation>Die neue Sprache wird nach einem Neustart von VT-Designer verwendet.</translation>
-    </message>
-</context>
-<context>
-    <name>Toolbox</name>
-    <message>
-        <location filename="../src/app/Toolbox.cpp" line="23" />
-        <source>Masks</source>
-        <translation>Masken</translation>
-    </message>
-    <message>
-        <location filename="../src/app/Toolbox.cpp" line="24" />
-        <source>Containers and keys</source>
-        <translation>Container und Tasten</translation>
-    </message>
-    <message>
-        <location filename="../src/app/Toolbox.cpp" line="25" />
-        <source>Input fields</source>
-        <translation>Eingabefelder</translation>
-    </message>
-    <message>
-        <location filename="../src/app/Toolbox.cpp" line="26" />
-        <source>Output fields</source>
-        <translation>Ausgabefelder</translation>
-    </message>
-    <message>
-        <location filename="../src/app/Toolbox.cpp" line="27" />
-        <source>Shapes</source>
-        <translation>Formen</translation>
-    </message>
-    <message>
-        <location filename="../src/app/Toolbox.cpp" line="29" />
-        <source>Graphics</source>
-        <translation>Grafiken</translation>
-    </message>
-    <message>
-        <location filename="../src/app/Toolbox.cpp" line="31" />
-        <source>Variables</source>
-        <translation>Variablen</translation>
-    </message>
-    <message>
-        <location filename="../src/app/Toolbox.cpp" line="32" />
-        <source>Attributes</source>
-        <translation>Attribute</translation>
-    </message>
-    <message>
-        <location filename="../src/app/Toolbox.cpp" line="35" />
-        <source>Other</source>
-        <translation>Sonstiges</translation>
-    </message>
-    <message>
-        <location filename="../src/app/Toolbox.cpp" line="84" />
-        <source>Requires VT version %1</source>
-        <translation>Erfordert VT-Version %1</translation>
-    </message>
-    <message>
-        <location filename="../src/app/Toolbox.cpp" line="85" />
-        <source>Drag onto the canvas or double-click</source>
-        <translation>Auf die Zeichenfläche ziehen oder doppelklicken</translation>
     </message>
 </context>
 </TS>

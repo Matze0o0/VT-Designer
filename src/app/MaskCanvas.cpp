@@ -2,6 +2,7 @@
 
 #include "AttributeInfo.h"
 #include "ObjectFactory.h"
+#include "ObjectIcons.h"
 
 #include <QContextMenuEvent>
 #include <QGraphicsPixmapItem>
@@ -52,6 +53,7 @@ MaskCanvas::MaskCanvas(EditorContext* context, QWidget* parent)
     connect(m_context, &EditorContext::documentChanged, this, &MaskCanvas::refresh);
     connect(m_context, &EditorContext::selectionChanged, viewport(), qOverload<>(&QWidget::update));
     setZoom(1.0);
+    refresh();
 }
 
 void MaskCanvas::refresh()
@@ -258,7 +260,7 @@ void MaskCanvas::drawForeground(QPainter* painter, const QRectF& rect)
         painter->resetTransform();
         painter->setPen(palette().color(QPalette::BrightText));
         painter->drawText(viewport()->rect(), Qt::AlignCenter,
-                          tr("Open a mask from the pool tree or drop a Data Mask from the toolbox."));
+                          tr("Open a mask from the pool tree or drag a Data Mask from the object bar above."));
         painter->restore();
         return;
     }
@@ -305,6 +307,26 @@ void MaskCanvas::drawForeground(QPainter* painter, const QRectF& rect)
     if (m_dropHighlight) {
         painter->setPen(QPen(QColor(0, 200, 0), 2.0 / m_zoom));
         painter->drawRect(QRectF(*m_dropHighlight));
+    }
+
+    if (m_dragPreview) {
+        const DragPreview& preview = *m_dragPreview;
+        painter->save();
+        if (preview.iconOnly) {
+            // Icons keep their screen size whatever the zoom.
+            painter->translate(QPointF(preview.position));
+            painter->scale(1.0 / m_zoom, 1.0 / m_zoom);
+            painter->drawImage(QPointF(6, 6), preview.image);
+        } else {
+            painter->setOpacity(0.75);
+            painter->drawImage(QPointF(preview.position), preview.image);
+            painter->setOpacity(1.0);
+            const QColor outline = preview.placeable ? QColor(0, 120, 215) : QColor(220, 0, 0);
+            painter->setPen(QPen(outline, 1.5 / m_zoom, Qt::DashLine));
+            painter->setBrush(Qt::NoBrush);
+            painter->drawRect(QRectF(QPointF(preview.position), QSizeF(preview.image.size())));
+        }
+        painter->restore();
     }
 
     const int selected = selectedPlacement();
@@ -576,9 +598,42 @@ std::optional<vt::ObjectType> MaskCanvas::draggedType(const QMimeData* mime) con
     return static_cast<vt::ObjectType>(type);
 }
 
+void MaskCanvas::prepareDragPreview(vt::ObjectType type)
+{
+    DragPreview preview;
+    preview.type = type;
+
+    // Render the object exactly as it would be created, using a scratch copy of the pool.
+    vt::ObjectPool scratch = m_context->pool();
+    std::vector<vt::VtObject> extra;
+    vt::VtObject object = ui::createObject(scratch, type, extra);
+    const vt::ObjectId id = object.id;
+    for (vt::VtObject& helper : extra) {
+        scratch.add(std::move(helper));
+    }
+    scratch.add(std::move(object));
+    const vtr::Renderer renderer(scratch, m_context->renderSettings());
+    const QSize size = renderer.objectSize(id);
+    const bool standalone = type == T::DataMask || type == T::AlarmMask || type == T::SoftKeyMask ||
+                            type == T::WindowMask || type == T::KeyGroup || type == T::WorkingSet;
+
+    if (!standalone && !size.isEmpty() && size.width() <= 4096 && size.height() <= 4096) {
+        preview.image = QImage(size, QImage::Format_ARGB32_Premultiplied);
+        preview.image.fill(Qt::transparent);
+        QPainter painter(&preview.image);
+        renderer.drawObject(painter, id, {0, 0});
+    } else {
+        preview.iconOnly = true;
+        preview.image = ui::objectPixmap(type, 40, devicePixelRatioF()).toImage();
+    }
+    m_dragPreview = preview;
+}
+
 void MaskCanvas::dragEnterEvent(QDragEnterEvent* event)
 {
-    if (draggedType(event->mimeData()) && m_context->document() != nullptr) {
+    const std::optional<vt::ObjectType> type = draggedType(event->mimeData());
+    if (type && m_context->document() != nullptr) {
+        prepareDragPreview(*type);
         event->acceptProposedAction();
     }
 }
@@ -589,8 +644,22 @@ void MaskCanvas::dragMoveEvent(QDragMoveEvent* event)
     if (!type) {
         return;
     }
-    const auto target = ui::dropTarget(m_context->pool(), m_layout, toVt(event->position().toPoint()), *type);
+    const QPoint vt = toVt(event->position().toPoint());
+    const auto target = ui::dropTarget(m_context->pool(), m_layout, vt, *type);
     m_dropHighlight = target ? std::optional<QRect>(target->rect) : std::nullopt;
+    if (m_dragPreview) {
+        m_dragPreview->position = QPoint(snap(vt.x()), snap(vt.y()));
+        if (m_dragPreview->iconOnly) {
+            m_dragPreview->placeable = true; // masks and non-visual objects go straight into the pool
+        } else if (*type == T::Key) {
+            m_dragPreview->placeable = std::any_of(m_layout.begin(), m_layout.end(), [this](const vtr::Placement& p) {
+                const vt::VtObject* o = m_context->pool().find(p.object);
+                return o != nullptr && o->type == T::SoftKeyMask;
+            });
+        } else {
+            m_dragPreview->placeable = target.has_value();
+        }
+    }
     viewport()->update();
     event->acceptProposedAction();
 }
@@ -598,6 +667,7 @@ void MaskCanvas::dragMoveEvent(QDragMoveEvent* event)
 void MaskCanvas::dragLeaveEvent(QDragLeaveEvent* event)
 {
     m_dropHighlight.reset();
+    m_dragPreview.reset();
     viewport()->update();
     QGraphicsView::dragLeaveEvent(event);
 }
@@ -605,6 +675,7 @@ void MaskCanvas::dragLeaveEvent(QDragLeaveEvent* event)
 void MaskCanvas::dropEvent(QDropEvent* event)
 {
     m_dropHighlight.reset();
+    m_dragPreview.reset();
     viewport()->update();
     const std::optional<vt::ObjectType> type = draggedType(event->mimeData());
     if (!type) {

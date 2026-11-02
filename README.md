@@ -45,8 +45,12 @@ Entwicklungsumgebung startet, kopiert `cmake --build --preset debug --target dep
 
 ## Bedienung des Editors
 
-- **Werkzeuge** (links oben): Objekttyp auf eine Maske ziehen oder doppelklicken. Benötigte Hilfsobjekte
-  (Schrift- und Linienattribute, Active Mask, Designator …) werden automatisch angelegt oder wiederverwendet.
+- **Objektleiste** (über der Zeichenfläche): ein Symbol je Objekttyp, nach Kategorien gruppiert und farblich
+  unterschieden; Name und Beschreibung erscheinen als Tooltip. Symbol auf eine Maske ziehen – während des Ziehens
+  zeigt die Zeichenfläche das Objekt halbtransparent in Originalgröße an der Ablagestelle und markiert das
+  Ziel-Elternobjekt (rot umrandet, wenn es dort nicht erlaubt ist). Ein Klick fügt das Objekt in das ausgewählte
+  Objekt ein. Benötigte Hilfsobjekte (Schrift- und Linienattribute, Designator …) werden automatisch angelegt oder
+  wiederverwendet. Objekte, die die eingestellte VT-Version nicht kennt, sind ausgegraut.
 - **Zeichenfläche**: klicken = auswählen, ziehen = verschieben, Anfasser = Größe ändern, Pfeiltasten = 1 px
   (mit Umschalt um eine Rasterweite), Alt+Klick = Elternobjekt auswählen, Doppelklick auf Container, Button
   oder Key = darin weiterarbeiten, Strg+Mausrad = Zoom.
@@ -60,7 +64,8 @@ Entwicklungsumgebung startet, kopiert `cmake --build --preset debug --target dep
 - **Datei → Pool exportieren** (Strg+E): schreibt `.iop`, ID-Header, `_data.h` und `_data.c`.
 
 Kommandozeile des Editors: `VT-Designer.exe datei.vtp` öffnet ein Projekt;
-`VT-Designer.exe --render dmMain --output maske.png --scale 2 datei.vtp` rendert eine Maske ohne Fenster.
+`VT-Designer.exe --render dmMain --output maske.png --scale 2 datei.vtp` rendert eine Maske ohne Fenster;
+`VT-Designer.exe --icons --output symbole.png` speichert eine Übersicht aller Objektsymbole.
 
 ## Kommandozeilenwerkzeug
 

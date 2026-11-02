@@ -3,11 +3,12 @@
 #include "AttributeInfo.h"
 #include "MaskCanvas.h"
 #include "ObjectFactory.h"
+#include "ObjectIcons.h"
+#include "ObjectPalette.h"
 #include "PoolTree.h"
 #include "ProblemsView.h"
 #include "PropertyEditor.h"
 #include "SettingsDialog.h"
-#include "Toolbox.h"
 
 #include "vtcore/Exporters.h"
 #include "vtcore/Hierarchy.h"
@@ -23,6 +24,7 @@
 #include <QDockWidget>
 #include <QFileDialog>
 #include <QFileInfo>
+#include <QFrame>
 #include <QInputDialog>
 #include <QLabel>
 #include <QMenuBar>
@@ -33,10 +35,14 @@
 #include <QToolBar>
 #include <QUndoGroup>
 #include <QUndoView>
+#include <QVBoxLayout>
 
 namespace {
 
 using T = vt::ObjectType;
+
+// Bump when the dock layout changes so stale saved layouts are ignored.
+constexpr int kWindowStateVersion = 2;
 
 vt::Project templateProject()
 {
@@ -73,8 +79,20 @@ MainWindow::MainWindow()
     : m_context(new EditorContext(this))
     , m_undoGroup(new QUndoGroup(this))
 {
-    m_canvas = new MaskCanvas(m_context, this);
-    setCentralWidget(m_canvas);
+    // Object palette directly above the canvas.
+    auto* central = new QWidget(this);
+    auto* centralLayout = new QVBoxLayout(central);
+    centralLayout->setContentsMargins(0, 0, 0, 0);
+    centralLayout->setSpacing(0);
+    m_palette = new ObjectPalette(m_context, central);
+    auto* line = new QFrame(central);
+    line->setFrameShape(QFrame::HLine);
+    line->setFrameShadow(QFrame::Sunken);
+    m_canvas = new MaskCanvas(m_context, central);
+    centralLayout->addWidget(m_palette);
+    centralLayout->addWidget(line);
+    centralLayout->addWidget(m_canvas, 1);
+    setCentralWidget(central);
 
     createActions();
     createDocks();
@@ -93,7 +111,7 @@ MainWindow::MainWindow()
         m_cursorLabel->setText(inside ? QStringLiteral("x %1  y %2").arg(p.x()).arg(p.y()) : QString());
     });
     connect(m_canvas, &MaskCanvas::objectDropped, this, &MainWindow::createObjectAt);
-    connect(m_toolbox, &Toolbox::createRequested, this, &MainWindow::createFromToolbox);
+    connect(m_palette, &ObjectPalette::createRequested, this, &MainWindow::createFromToolbox);
     connect(m_tree, &PoolTree::deleteRequested, this, &MainWindow::deleteObject);
     connect(m_problems, &ProblemsView::countsChanged, this, [this](int errors, int warnings) {
         m_problemLabel->setText(tr("%n error(s)", nullptr, errors) + QStringLiteral(", ") +
@@ -112,7 +130,7 @@ MainWindow::MainWindow()
     resize(1400, 900);
     QSettings settings;
     restoreGeometry(settings.value(QStringLiteral("window/geometry")).toByteArray());
-    restoreState(settings.value(QStringLiteral("window/state")).toByteArray());
+    restoreState(settings.value(QStringLiteral("window/state")).toByteArray(), kWindowStateVersion);
 
     setDocument(std::make_unique<Document>(templateProject()));
 }
@@ -278,22 +296,18 @@ void MainWindow::createDocks()
         addDockWidget(area, dock);
         return dock;
     };
-    m_toolbox = new Toolbox(m_context);
     m_tree = new PoolTree(m_context);
     m_properties = new PropertyEditor(m_context);
     m_problems = new ProblemsView(m_context);
     auto* history = new QUndoView(m_undoGroup);
 
-    QDockWidget* toolboxDock = addDock(tr("Toolbox"), "toolboxDock", m_toolbox, Qt::LeftDockWidgetArea);
     QDockWidget* treeDock = addDock(tr("Pool"), "poolDock", m_tree, Qt::LeftDockWidgetArea);
     QDockWidget* propertiesDock = addDock(tr("Properties"), "propertiesDock", m_properties, Qt::RightDockWidgetArea);
     QDockWidget* problemsDock = addDock(tr("Problems"), "problemsDock", m_problems, Qt::BottomDockWidgetArea);
     QDockWidget* historyDock = addDock(tr("History"), "historyDock", history, Qt::BottomDockWidgetArea);
-    splitDockWidget(toolboxDock, treeDock, Qt::Vertical);
     tabifyDockWidget(problemsDock, historyDock);
     problemsDock->raise();
-    resizeDocks({toolboxDock, treeDock}, {300, 500}, Qt::Vertical);
-    resizeDocks({toolboxDock, propertiesDock}, {260, 380}, Qt::Horizontal);
+    resizeDocks({treeDock, propertiesDock}, {260, 380}, Qt::Horizontal);
     resizeDocks({problemsDock}, {140}, Qt::Vertical);
 }
 
@@ -377,7 +391,7 @@ void MainWindow::closeEvent(QCloseEvent* event)
     }
     QSettings settings;
     settings.setValue(QStringLiteral("window/geometry"), saveGeometry());
-    settings.setValue(QStringLiteral("window/state"), saveState());
+    settings.setValue(QStringLiteral("window/state"), saveState(kWindowStateVersion));
     event->accept();
 }
 

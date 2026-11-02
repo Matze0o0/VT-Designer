@@ -10,6 +10,7 @@
 #include <optional>
 
 class MaskCanvas;
+class ObjectPalette;
 class PoolTree;
 class ProblemsView;
 class PropertyEditor;
@@ -17,7 +18,6 @@ class QAction;
 class QComboBox;
 class QLabel;
 class QUndoGroup;
-class Toolbox;
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -64,9 +64,9 @@ private:
     QUndoGroup* m_undoGroup;
 
     MaskCanvas* m_canvas = nullptr;
+    ObjectPalette* m_palette = nullptr;
     PoolTree* m_tree = nullptr;
     PropertyEditor* m_properties = nullptr;
-    Toolbox* m_toolbox = nullptr;
     ProblemsView* m_problems = nullptr;
     QComboBox* m_viewRoots = nullptr;
     QLabel* m_cursorLabel = nullptr;

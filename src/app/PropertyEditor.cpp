@@ -3,6 +3,7 @@
 #include "AttributeInfo.h"
 #include "ListEditor.h"
 #include "ObjectFactory.h"
+#include "ObjectIcons.h"
 
 #include "vtcore/Hierarchy.h"
 #include "vtcore/PictureCodec.h"
@@ -117,6 +118,7 @@ PropertyEditor::PropertyEditor(EditorContext* context, QWidget* parent)
     connect(m_context, &EditorContext::documentChanged, this, &PropertyEditor::rebuild);
     connect(m_context, &EditorContext::settingsChanged, this, &PropertyEditor::rebuild);
     connect(m_context, &EditorContext::poolChanged, this, &PropertyEditor::refresh);
+    rebuild();
 }
 
 const vt::VtObject* PropertyEditor::object() const
@@ -213,6 +215,8 @@ void PropertyEditor::addObjectSection()
 {
     const vt::VtObject& o = *object();
     QTreeWidgetItem* section = addSection(ui::typeLabel(o.type));
+    section->setIcon(0, ui::objectIcon(o.type));
+    section->setToolTip(0, ui::objectDescription(o.type));
 
     auto* name = new QLineEdit;
     name->setPlaceholderText(tr("used as symbol in the ID header"));

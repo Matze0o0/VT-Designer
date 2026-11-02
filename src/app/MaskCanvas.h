@@ -81,6 +81,16 @@ private:
     void applyMove(QPoint delta);
     void applyResize(QPoint delta);
     std::optional<vt::ObjectType> draggedType(const QMimeData* mime) const;
+    void prepareDragPreview(vt::ObjectType type);
+
+    // Object being dragged in from the palette, drawn where it would be dropped.
+    struct DragPreview {
+        vt::ObjectType type = vt::ObjectType::DataMask;
+        QImage image;          // rendered object in VT pixels, or the type icon
+        bool iconOnly = false; // masks and non-visual objects show their icon
+        QPoint position;       // top left in VT pixels
+        bool placeable = false;
+    };
 
     EditorContext* m_context;
     QGraphicsScene* m_scene;
@@ -102,5 +112,6 @@ private:
     vt::ChildRef m_startChild;
     int m_interaction = 0;
     std::optional<QRect> m_dropHighlight;
+    std::optional<DragPreview> m_dragPreview;
     QList<QAction*> m_contextActions;
 };

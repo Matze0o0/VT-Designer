@@ -1,6 +1,7 @@
 #include "PoolTree.h"
 
 #include "AttributeInfo.h"
+#include "ObjectIcons.h"
 
 #include "vtcore/Hierarchy.h"
 #include "vtrender/VtRenderer.h"
@@ -59,6 +60,7 @@ PoolTree::PoolTree(EditorContext* context, QWidget* parent)
     connect(m_context, &EditorContext::poolChanged, this, &PoolTree::scheduleRebuild);
     connect(m_context, &EditorContext::documentChanged, this, &PoolTree::scheduleRebuild);
     connect(m_context, &EditorContext::selectionChanged, this, &PoolTree::syncSelection);
+    scheduleRebuild();
 }
 
 void PoolTree::scheduleRebuild()
@@ -72,6 +74,7 @@ void PoolTree::scheduleRebuild()
 QTreeWidgetItem* PoolTree::createItem(const vt::VtObject& object, vt::ObjectId parent, int index)
 {
     auto* item = new QTreeWidgetItem({ui::objectDisplayName(object)});
+    item->setIcon(0, ui::objectIcon(object.type));
     item->setData(0, ObjectRole, object.id);
     item->setData(0, ParentRole, parent);
     item->setData(0, IndexRole, index);
@@ -127,6 +130,7 @@ void PoolTree::rebuild()
 
     for (T type : kTopLevelTypes) {
         auto* group = new QTreeWidgetItem(m_hierarchy, {ui::typeLabel(type)});
+        group->setIcon(0, ui::objectIcon(type));
         group->setData(0, ObjectRole, static_cast<int>(vt::kNullObjectId));
         group->setData(0, KeyRole, QStringLiteral("group/%1").arg(static_cast<int>(type)));
         group->setFlags(Qt::ItemIsEnabled);
@@ -148,6 +152,7 @@ void PoolTree::rebuild()
     for (auto& [type, objects] : byType) {
         auto* group = new QTreeWidgetItem(
             m_byType, {QStringLiteral("%1 (%2)").arg(ui::typeLabel(static_cast<T>(type))).arg(objects.size())});
+        group->setIcon(0, ui::objectIcon(static_cast<T>(type)));
         group->setData(0, ObjectRole, static_cast<int>(vt::kNullObjectId));
         group->setData(0, KeyRole, QStringLiteral("type/%1").arg(type));
         group->setFlags(Qt::ItemIsEnabled);

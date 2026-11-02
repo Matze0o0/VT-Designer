@@ -8,7 +8,9 @@ qt_add_executable(vtdesigner
     PoolTree.h PoolTree.cpp
     PropertyEditor.h PropertyEditor.cpp
     ListEditor.h ListEditor.cpp
-    Toolbox.h Toolbox.cpp
+    ObjectPalette.h ObjectPalette.cpp
+    ObjectIcons.h ObjectIcons.cpp
+    FlowLayout.h FlowLayout.cpp
     ProblemsView.h ProblemsView.cpp
     SettingsDialog.h SettingsDialog.cpp
     MainWindow.h MainWindow.cpp
