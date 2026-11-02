@@ -28,7 +28,10 @@ if(TARGET Qt6::Widgets)
         app/main.cpp
         app/DocumentTest.cpp
         app/CanvasTest.cpp
+        app/PropertyEditorTest.cpp
         ${APP_DIR}/AttributeInfo.cpp ${APP_DIR}/AttributeInfo.h
+        ${APP_DIR}/ListEditor.cpp ${APP_DIR}/ListEditor.h
+        ${APP_DIR}/PropertyEditor.cpp ${APP_DIR}/PropertyEditor.h
         ${APP_DIR}/Document.cpp ${APP_DIR}/Document.h
         ${APP_DIR}/EditorContext.cpp ${APP_DIR}/EditorContext.h
         ${APP_DIR}/FlowLayout.cpp ${APP_DIR}/FlowLayout.h

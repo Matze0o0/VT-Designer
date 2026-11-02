@@ -23,8 +23,10 @@
 #include <QPainter>
 #include <QPushButton>
 #include <QRegularExpression>
+#include <QScrollBar>
 #include <QSignalBlocker>
 #include <QSpinBox>
+#include <QTimer>
 #include <QToolButton>
 #include <QTreeWidget>
 #include <QVBoxLayout>
@@ -32,6 +34,7 @@
 #include <algorithm>
 #include <cmath>
 #include <limits>
+#include <memory>
 
 namespace {
 
@@ -39,11 +42,28 @@ using T = vt::ObjectType;
 
 constexpr int kAttributeMergeBase = 0x40000000;
 constexpr int kNewObjectBase = -1000;
+constexpr int kGroupKeyRole = Qt::UserRole;
 
 bool isTextType(T type)
 {
     return type == T::InputString || type == T::OutputString || type == T::StringVariable ||
            type == T::InputAttributes;
+}
+
+// Helper objects whose attributes are shown and edited below the reference that uses them.
+bool editableInline(T type)
+{
+    switch (type) {
+    case T::FontAttributes:
+    case T::LineAttributes:
+    case T::FillAttributes:
+    case T::InputAttributes:
+    case T::ExtendedInputAttributes:
+    case T::NumberVariable:
+    case T::StringVariable:
+    case T::ExternalReferenceName: return true;
+    default: return false;
+    }
 }
 
 // Types that make sense to create directly from a reference field.
@@ -112,7 +132,17 @@ PropertyEditor::PropertyEditor(EditorContext* context, QWidget* parent)
     m_tree->header()->setStretchLastSection(true);
     m_tree->setSelectionMode(QAbstractItemView::NoSelection);
     m_tree->setFocusPolicy(Qt::NoFocus);
-    m_tree->setIndentation(10);
+    m_tree->setIndentation(12);
+
+    // Remember which inline groups the user folded away.
+    connect(m_tree, &QTreeWidget::itemCollapsed, this, [this](QTreeWidgetItem* item) {
+        const QString key = item->data(0, kGroupKeyRole).toString();
+        if (!key.isEmpty()) {
+            m_collapsedGroups.insert(key);
+        }
+    });
+    connect(m_tree, &QTreeWidget::itemExpanded, this,
+            [this](QTreeWidgetItem* item) { m_collapsedGroups.erase(item->data(0, kGroupKeyRole).toString()); });
 
     connect(m_context, &EditorContext::selectionChanged, this, &PropertyEditor::rebuild);
     connect(m_context, &EditorContext::documentChanged, this, &PropertyEditor::rebuild);
@@ -121,12 +151,12 @@ PropertyEditor::PropertyEditor(EditorContext* context, QWidget* parent)
     rebuild();
 }
 
-const vt::VtObject* PropertyEditor::object() const
+const vt::VtObject* PropertyEditor::objectById(vt::ObjectId id) const
 {
     if (m_context->document() == nullptr) {
         return nullptr;
     }
-    return m_context->pool().find(m_objectId);
+    return m_context->pool().find(id);
 }
 
 void PropertyEditor::commit(const vt::VtObject& changed, const QString& text, int mergeKey)
@@ -134,9 +164,9 @@ void PropertyEditor::commit(const vt::VtObject& changed, const QString& text, in
     m_context->document()->commit(text, {changed}, {}, mergeKey);
 }
 
-void PropertyEditor::commitAttribute(std::size_t index, double value)
+void PropertyEditor::commitAttribute(vt::ObjectId id, std::size_t index, double value)
 {
-    const vt::VtObject* current = object();
+    const vt::VtObject* current = objectById(id);
     if (current == nullptr || index >= current->attributes.size() || current->attributes[index] == value) {
         return;
     }
@@ -147,11 +177,67 @@ void PropertyEditor::commitAttribute(std::size_t index, double value)
            kAttributeMergeBase + (static_cast<int>(changed.id) << 7) + static_cast<int>(index));
 }
 
+void PropertyEditor::makeOwnCopy(vt::ObjectId ownerId, std::size_t index)
+{
+    const vt::VtObject* owner = objectById(ownerId);
+    if (owner == nullptr || index >= owner->attributes.size()) {
+        return;
+    }
+    const vt::VtObject* shared = objectById(static_cast<vt::ObjectId>(owner->attributes[index]));
+    if (shared == nullptr) {
+        return;
+    }
+    vt::VtObject copy = *shared;
+    copy.id = ui::allocateId(m_context->pool(), copy.type, {});
+    if (!copy.name.empty()) {
+        const std::string base = copy.name + "_copy";
+        std::string name = base;
+        for (int n = 2; m_context->pool().findByName(name) != nullptr; ++n) {
+            name = base + std::to_string(n);
+        }
+        copy.name = name;
+    }
+    vt::VtObject changedOwner = *owner;
+    changedOwner.attributes[index] = copy.id;
+    m_context->document()->commit(tr("Own copy of %1").arg(ui::typeLabel(copy.type)), {copy, changedOwner});
+}
+
+void PropertyEditor::scheduleRebuild()
+{
+    if (m_rebuildQueued) {
+        return;
+    }
+    m_rebuildQueued = true;
+    // Deferred: the change may come from a widget that a rebuild would delete.
+    QTimer::singleShot(0, this, [this] {
+        m_rebuildQueued = false;
+        if (m_context->selection().object == m_objectId) {
+            const int scroll = m_tree->verticalScrollBar()->value();
+            rebuild();
+            m_tree->verticalScrollBar()->setValue(scroll);
+        } else {
+            rebuild();
+        }
+    });
+}
+
 void PropertyEditor::refresh()
 {
     if (object() == nullptr) {
         rebuild();
         return;
+    }
+    // A reference pointing somewhere else needs other inline editors.
+    for (const InlineTarget& target : m_inlineTargets) {
+        const vt::VtObject* owner = objectById(target.owner);
+        const vt::ObjectId current = owner != nullptr && target.index < owner->attributes.size()
+                                         ? static_cast<vt::ObjectId>(owner->attributes[target.index])
+                                         : vt::kNullObjectId;
+        const bool exists = objectById(current) != nullptr;
+        if (current != target.target || (target.target != vt::kNullObjectId && !exists)) {
+            scheduleRebuild();
+            return;
+        }
     }
     for (const Refresher& refresher : m_refreshers) {
         refresher();
@@ -169,32 +255,35 @@ QTreeWidgetItem* PropertyEditor::addSection(const QString& title)
     return item;
 }
 
-void PropertyEditor::addRow(QTreeWidgetItem* section, const QString& label, QWidget* editor, Refresher refresher,
-                            const QString& toolTip)
+QTreeWidgetItem* PropertyEditor::addRow(QTreeWidgetItem* parent, const QString& label, QWidget* editor,
+                                        Refresher refresher, const QString& toolTip)
 {
-    auto* item = new QTreeWidgetItem(section, {label});
+    auto* item = new QTreeWidgetItem(parent, {label});
     item->setToolTip(0, toolTip.isEmpty() ? label : toolTip);
     m_tree->setItemWidget(item, 1, editor);
     if (refresher) {
         refresher();
         m_refreshers.push_back(std::move(refresher));
     }
+    return item;
 }
 
-void PropertyEditor::addWideRow(QTreeWidgetItem* section, QWidget* editor, Refresher refresher)
+QTreeWidgetItem* PropertyEditor::addWideRow(QTreeWidgetItem* parent, QWidget* editor, Refresher refresher)
 {
-    auto* item = new QTreeWidgetItem(section);
+    auto* item = new QTreeWidgetItem(parent);
     item->setFirstColumnSpanned(true);
     m_tree->setItemWidget(item, 0, editor);
     if (refresher) {
         refresher();
         m_refreshers.push_back(std::move(refresher));
     }
+    return item;
 }
 
 void PropertyEditor::rebuild()
 {
     m_refreshers.clear();
+    m_inlineTargets.clear();
     m_tree->clear();
     m_selection = m_context->selection();
     m_objectId = m_selection.object;
@@ -260,7 +349,7 @@ void PropertyEditor::addObjectSection()
 
 void PropertyEditor::addPlacementSection()
 {
-    const vt::VtObject* parent = m_context->pool().find(m_selection.parent);
+    const vt::VtObject* parent = objectById(m_selection.parent);
     if (parent == nullptr || m_selection.index < 0 ||
         static_cast<std::size_t>(m_selection.index) >= parent->children.size() ||
         vt::containmentList(parent->type) != vt::ListKind::Children) {
@@ -272,7 +361,7 @@ void PropertyEditor::addPlacementSection()
         spin->setRange(-32768, 32767);
         spin->setKeyboardTracking(false);
         connect(spin, &QSpinBox::valueChanged, this, [this, axis](int value) {
-            const vt::VtObject* p = m_context->pool().find(m_selection.parent);
+            const vt::VtObject* p = objectById(m_selection.parent);
             const auto index = static_cast<std::size_t>(m_selection.index);
             if (p == nullptr || index >= p->children.size()) {
                 return;
@@ -286,7 +375,7 @@ void PropertyEditor::addPlacementSection()
             commit(changed, tr("Move object"));
         });
         addRow(section, axis == 0 ? tr("X") : tr("Y"), spin, [this, spin, axis] {
-            const vt::VtObject* p = m_context->pool().find(m_selection.parent);
+            const vt::VtObject* p = objectById(m_selection.parent);
             const auto index = static_cast<std::size_t>(m_selection.index);
             if (p != nullptr && index < p->children.size()) {
                 const QSignalBlocker block(spin);
@@ -298,40 +387,137 @@ void PropertyEditor::addPlacementSection()
 
 void PropertyEditor::addAttributeSection()
 {
-    const vt::VtObject& o = *object();
-    const vt::ObjectSchema& schema = o.schema();
-    if (schema.attributes.empty()) {
+    if (object()->schema().attributes.empty()) {
         return;
     }
-    QTreeWidgetItem* section = addSection(tr("Attributes"));
+    addAttributeRows(addSection(tr("Attributes")), m_objectId, true);
+}
+
+void PropertyEditor::addAttributeRows(QTreeWidgetItem* parent, vt::ObjectId id, bool withInlineTargets)
+{
+    const vt::VtObject* o = objectById(id);
+    if (o == nullptr) {
+        return;
+    }
+    const vt::ObjectSchema& schema = o->schema();
     for (std::size_t i = 0; i < schema.attributes.size(); ++i) {
-        Refresher refresher;
-        QWidget* editor = attributeEditor(i, refresher);
         const vt::AttributeDef& def = schema.attributes[i];
+        Refresher refresher;
+        QWidget* editor = attributeEditor(id, i, refresher);
         QString toolTip = ui::attributeLabel(def);
         if (def.aid >= 0) {
             toolTip += tr(" (AID %1)").arg(def.aid);
         }
-        addRow(section, ui::attributeLabel(def), editor, std::move(refresher), toolTip);
+        QTreeWidgetItem* row = addRow(parent, ui::attributeLabel(def), editor, std::move(refresher), toolTip);
+
+        if (withInlineTargets && def.type == vt::FieldType::ObjectRef) {
+            const bool inlineType = std::any_of(def.refTypes.begin(), def.refTypes.end(), editableInline);
+            if (inlineType) {
+                addInlineObject(row, id, i);
+            }
+        }
     }
 }
 
-QWidget* PropertyEditor::attributeEditor(std::size_t index, Refresher& refresher)
+void PropertyEditor::addInlineObject(QTreeWidgetItem* referenceRow, vt::ObjectId ownerId, std::size_t index)
 {
-    const vt::VtObject& o = *object();
+    const vt::VtObject* owner = objectById(ownerId);
+    const auto targetId = static_cast<vt::ObjectId>(owner->attributes[index]);
+    m_inlineTargets.push_back({ownerId, index, targetId});
+    const vt::VtObject* target = objectById(targetId);
+    if (target == nullptr || !editableInline(target->type)) {
+        return;
+    }
+
+    const QString key = QStringLiteral("%1.%2")
+                            .arg(QString::fromLatin1(vt::objectTypeName(owner->type).data()))
+                            .arg(QString::fromLatin1(owner->schema().attributes[index].name.data()));
+    referenceRow->setData(0, kGroupKeyRole, key);
+    referenceRow->setIcon(0, ui::objectIcon(target->type));
+
+    // Shared attribute objects change every object that uses them; offer to split them off.
+    const std::vector<vt::ObjectId> users = vt::usersOf(m_context->pool(), targetId);
+    if (users.size() > 1) {
+        auto* box = new QWidget;
+        auto* layout = new QHBoxLayout(box);
+        layout->setContentsMargins(2, 1, 2, 1);
+        auto* label = new QLabel(tr("Also used by %n other object(s) – changes apply to all.", nullptr,
+                                    static_cast<int>(users.size()) - 1));
+        label->setWordWrap(true);
+        label->setStyleSheet(QStringLiteral("color: #8a6d00"));
+        auto* copy = new QPushButton(tr("Own copy"));
+        copy->setToolTip(tr("Copy %1 so that changes only affect this object").arg(ui::objectDisplayName(*target)));
+        connect(copy, &QPushButton::clicked, this, [this, ownerId, index] { makeOwnCopy(ownerId, index); });
+        layout->addWidget(label, 1);
+        layout->addWidget(copy);
+        addWideRow(referenceRow, box, {});
+    }
+
+    addAttributeRows(referenceRow, targetId, false);
+    if (isTextType(target->type)) {
+        Refresher refresher;
+        QWidget* editor = textEditor(targetId, refresher);
+        addRow(referenceRow, target->type == T::InputAttributes ? tr("Characters") : tr("Text"), editor,
+               std::move(refresher));
+    }
+    referenceRow->setExpanded(m_collapsedGroups.count(key) == 0);
+}
+
+QWidget* PropertyEditor::attributeEditor(vt::ObjectId id, std::size_t index, Refresher& refresher)
+{
+    const vt::VtObject& o = *objectById(id);
     const vt::AttributeDef& def = o.schema().attributes[index];
-    auto current = [this, index]() -> double {
-        const vt::VtObject* obj = object();
+    auto current = [this, id, index]() -> double {
+        const vt::VtObject* obj = objectById(id);
         return obj != nullptr && index < obj->attributes.size() ? obj->attributes[index] : 0;
     };
 
+    if (def.name == "lineArt") {
+        // 16 squares, one per brush spot of the line pattern (most significant bit first).
+        auto* box = new QWidget;
+        auto* layout = new QHBoxLayout(box);
+        layout->setContentsMargins(0, 2, 0, 2);
+        layout->setSpacing(1);
+        auto bits = std::make_shared<std::vector<QToolButton*>>();
+        for (int i = 0; i < 16; ++i) {
+            auto* bit = new QToolButton;
+            bit->setCheckable(true);
+            bit->setFixedSize(12, 18);
+            bit->setStyleSheet(QStringLiteral("QToolButton { border: 1px solid #90a4ae; background: white; }"
+                                              "QToolButton:checked { background: #37474f; }"));
+            layout->addWidget(bit);
+            bits->push_back(bit);
+            connect(bit, &QToolButton::toggled, this, [this, id, index, bits] {
+                int value = 0;
+                for (int b = 0; b < 16; ++b) {
+                    if ((*bits)[static_cast<std::size_t>(b)]->isChecked()) {
+                        value |= 1 << (15 - b);
+                    }
+                }
+                commitAttribute(id, index, value);
+            });
+        }
+        layout->addStretch();
+        box->setToolTip(tr("Line pattern: each square is one brush spot of the line width; dark squares are drawn."));
+        refresher = [bits, current] {
+            const int value = static_cast<int>(current());
+            for (int b = 0; b < 16; ++b) {
+                QToolButton* bit = (*bits)[static_cast<std::size_t>(b)];
+                const QSignalBlocker block(bit);
+                bit->setChecked((value & (1 << (15 - b))) != 0);
+            }
+        };
+        return box;
+    }
+
     switch (ui::editorKind(o.type, def)) {
     case ui::EditorKind::ObjectRef:
-        return objectRefEditor(index, refresher);
+        return objectRefEditor(id, index, refresher);
 
     case ui::EditorKind::Boolean: {
         auto* box = new QCheckBox;
-        connect(box, &QCheckBox::toggled, this, [this, index](bool on) { commitAttribute(index, on ? 1 : 0); });
+        connect(box, &QCheckBox::toggled, this,
+                [this, id, index](bool on) { commitAttribute(id, index, on ? 1 : 0); });
         refresher = [box, current] {
             const QSignalBlocker block(box);
             box->setChecked(current() != 0);
@@ -345,7 +531,7 @@ QWidget* PropertyEditor::attributeEditor(std::size_t index, Refresher& refresher
             combo->addItem(ui::colourIcon(c), ui::colourName(c), c);
         }
         combo->setMaxVisibleItems(20);
-        connect(combo, &QComboBox::activated, this, [this, index](int i) { commitAttribute(index, i); });
+        connect(combo, &QComboBox::activated, this, [this, id, index](int i) { commitAttribute(id, index, i); });
         refresher = [combo, current] {
             const QSignalBlocker block(combo);
             combo->setCurrentIndex(std::clamp(static_cast<int>(current()), 0, 255));
@@ -359,7 +545,7 @@ QWidget* PropertyEditor::attributeEditor(std::size_t index, Refresher& refresher
             combo->addItem(v.name, v.value);
         }
         connect(combo, &QComboBox::activated, this,
-                [this, index, combo](int i) { commitAttribute(index, combo->itemData(i).toInt()); });
+                [this, id, index, combo](int i) { commitAttribute(id, index, combo->itemData(i).toInt()); });
         refresher = [combo, current] {
             const QSignalBlocker block(combo);
             const int value = static_cast<int>(current());
@@ -379,22 +565,17 @@ QWidget* PropertyEditor::attributeEditor(std::size_t index, Refresher& refresher
         button->setToolButtonStyle(Qt::ToolButtonTextOnly);
         button->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
         auto* menu = new QMenu(button);
-        const std::vector<ui::NamedValue> bits = ui::flagBits(o.type, def);
-        for (const ui::NamedValue& bit : bits) {
+        for (const ui::NamedValue& bit : ui::flagBits(o.type, def)) {
             QAction* action = menu->addAction(bit.name);
             action->setCheckable(true);
             action->setData(bit.value);
-            connect(action, &QAction::toggled, this, [this, index, menu] {
-                int value = 0;
-                const vt::VtObject* obj = object();
-                if (obj != nullptr) {
-                    value = static_cast<int>(obj->attributes[index]);
-                }
+            connect(action, &QAction::toggled, this, [this, id, index, menu, current] {
+                auto value = static_cast<int>(current());
                 for (QAction* a : menu->actions()) {
                     const int mask = a->data().toInt();
                     value = a->isChecked() ? (value | mask) : (value & ~mask);
                 }
-                commitAttribute(index, value);
+                commitAttribute(id, index, value);
             });
         }
         button->setMenu(menu);
@@ -421,7 +602,7 @@ QWidget* PropertyEditor::attributeEditor(std::size_t index, Refresher& refresher
         spin->setRange(std::max(def.minValue, -1e9), std::min(def.maxValue, 1e9));
         spin->setKeyboardTracking(false);
         connect(spin, &QDoubleSpinBox::valueChanged, this,
-                [this, index](double value) { commitAttribute(index, static_cast<float>(value)); });
+                [this, id, index](double value) { commitAttribute(id, index, static_cast<float>(value)); });
         refresher = [spin, current] {
             const QSignalBlocker block(spin);
             spin->setValue(current());
@@ -436,7 +617,8 @@ QWidget* PropertyEditor::attributeEditor(std::size_t index, Refresher& refresher
             auto* spin = new QSpinBox;
             spin->setRange(static_cast<int>(def.minValue), static_cast<int>(def.maxValue));
             spin->setKeyboardTracking(false);
-            connect(spin, &QSpinBox::valueChanged, this, [this, index](int value) { commitAttribute(index, value); });
+            connect(spin, &QSpinBox::valueChanged, this,
+                    [this, id, index](int value) { commitAttribute(id, index, value); });
             refresher = [spin, current] {
                 const QSignalBlocker block(spin);
                 spin->setValue(static_cast<int>(current()));
@@ -448,7 +630,7 @@ QWidget* PropertyEditor::attributeEditor(std::size_t index, Refresher& refresher
         spin->setRange(def.minValue, def.maxValue);
         spin->setKeyboardTracking(false);
         connect(spin, &QDoubleSpinBox::valueChanged, this,
-                [this, index](double value) { commitAttribute(index, std::round(value)); });
+                [this, id, index](double value) { commitAttribute(id, index, std::round(value)); });
         refresher = [spin, current] {
             const QSignalBlocker block(spin);
             spin->setValue(current());
@@ -458,9 +640,9 @@ QWidget* PropertyEditor::attributeEditor(std::size_t index, Refresher& refresher
     }
 }
 
-QWidget* PropertyEditor::objectRefEditor(std::size_t index, Refresher& refresher)
+QWidget* PropertyEditor::objectRefEditor(vt::ObjectId id, std::size_t index, Refresher& refresher)
 {
-    const vt::AttributeDef def = object()->schema().attributes[index];
+    const vt::AttributeDef def = objectById(id)->schema().attributes[index];
     auto* container = new QWidget;
     auto* layout = new QHBoxLayout(container);
     layout->setContentsMargins(0, 0, 0, 0);
@@ -477,10 +659,10 @@ QWidget* PropertyEditor::objectRefEditor(std::size_t index, Refresher& refresher
         return def.refTypes.empty() || std::find(def.refTypes.begin(), def.refTypes.end(), type) != def.refTypes.end();
     };
 
-    connect(combo, &QComboBox::activated, this, [this, combo, index](int i) {
+    connect(combo, &QComboBox::activated, this, [this, combo, id, index](int i) {
         const int data = combo->itemData(i).toInt();
         if (data >= 0) {
-            commitAttribute(index, data);
+            commitAttribute(id, index, data);
             return;
         }
         // "New ..." entry: create the object and reference it in one step.
@@ -491,21 +673,21 @@ QWidget* PropertyEditor::objectRefEditor(std::size_t index, Refresher& refresher
             refresh();
             return;
         }
-        vt::VtObject changed = *object();
+        vt::VtObject changed = *objectById(id);
         changed.attributes[index] = created.id;
         extra.push_back(created);
         extra.push_back(changed);
         m_context->document()->commit(tr("New %1").arg(ui::typeLabel(type)), extra);
     });
-    connect(go, &QToolButton::clicked, this, [this, index] {
-        const vt::VtObject* obj = object();
+    connect(go, &QToolButton::clicked, this, [this, id, index] {
+        const vt::VtObject* obj = objectById(id);
         if (obj != nullptr && m_context->pool().contains(static_cast<vt::ObjectId>(obj->attributes[index]))) {
             m_context->selectObject(static_cast<vt::ObjectId>(obj->attributes[index]));
         }
     });
 
-    refresher = [this, combo, go, index, def, allowed] {
-        const vt::VtObject* obj = object();
+    refresher = [this, combo, go, id, index, def, allowed] {
+        const vt::VtObject* obj = objectById(id);
         if (obj == nullptr) {
             return;
         }
@@ -517,7 +699,8 @@ QWidget* PropertyEditor::objectRefEditor(std::size_t index, Refresher& refresher
         }
         for (const vt::VtObject& candidate : m_context->pool().objects()) {
             if (allowed(candidate.type)) {
-                combo->addItem(ui::objectDisplayName(candidate), static_cast<int>(candidate.id));
+                combo->addItem(ui::objectIcon(candidate.type), ui::objectDisplayName(candidate),
+                               static_cast<int>(candidate.id));
             }
         }
         if (combo->findData(value) < 0) {
@@ -527,7 +710,8 @@ QWidget* PropertyEditor::objectRefEditor(std::size_t index, Refresher& refresher
             combo->insertSeparator(combo->count());
             for (T type : def.refTypes) {
                 if (creatableFromReference(type)) {
-                    combo->addItem(tr("New %1…").arg(ui::typeLabel(type)), kNewObjectBase - static_cast<int>(type));
+                    combo->addItem(ui::objectIcon(type), tr("New %1…").arg(ui::typeLabel(type)),
+                                   kNewObjectBase - static_cast<int>(type));
                 }
             }
         }
@@ -553,7 +737,7 @@ void PropertyEditor::addContentSection()
     if (schema.hasList(vt::ListKind::Data)) {
         Refresher refresher;
         if (isTextType(o.type)) {
-            QWidget* editor = textEditor(refresher);
+            QWidget* editor = textEditor(m_objectId, refresher);
             addRow(section, o.type == T::InputAttributes ? tr("Characters") : tr("Text"), editor, refresher);
         } else if (o.type == T::PictureGraphic) {
             QWidget* editor = pictureEditor(refresher);
@@ -625,19 +809,19 @@ void PropertyEditor::addContentSection()
     }
 }
 
-QWidget* PropertyEditor::textEditor(Refresher& refresher)
+QWidget* PropertyEditor::textEditor(vt::ObjectId id, Refresher& refresher)
 {
     auto* edit = new QLineEdit;
-    auto fontType = [this]() -> int {
-        const vt::VtObject* obj = object();
+    auto fontType = [this, id]() -> int {
+        const vt::VtObject* obj = objectById(id);
         if (obj == nullptr || !obj->hasAttribute("fontAttributes")) {
             return 0;
         }
-        const vt::VtObject* font = m_context->pool().find(static_cast<vt::ObjectId>(obj->get("fontAttributes")));
+        const vt::VtObject* font = objectById(static_cast<vt::ObjectId>(obj->get("fontAttributes")));
         return font != nullptr ? static_cast<int>(font->get("fontType")) : 0;
     };
-    connect(edit, &QLineEdit::editingFinished, this, [this, edit, fontType] {
-        const vt::VtObject* obj = object();
+    connect(edit, &QLineEdit::editingFinished, this, [this, id, edit, fontType] {
+        const vt::VtObject* obj = objectById(id);
         if (obj == nullptr) {
             return;
         }
@@ -654,8 +838,8 @@ QWidget* PropertyEditor::textEditor(Refresher& refresher)
             commit(changed, tr("Change text"));
         }
     });
-    refresher = [this, edit, fontType] {
-        const vt::VtObject* obj = object();
+    refresher = [this, id, edit, fontType] {
+        const vt::VtObject* obj = objectById(id);
         if (obj != nullptr && !edit->hasFocus()) {
             edit->setText(vtr::decodeVtString(obj->data, fontType()));
             edit->setToolTip(vtr::isWideString(obj->data) ? tr("Stored as WideString (UTF-16)")
@@ -719,8 +903,7 @@ QWidget* PropertyEditor::pictureEditor(Refresher& refresher)
 
     refresher = [this, preview, info] {
         const vt::VtObject& picture = *object();
-        vtr::RenderSettings settings = m_context->renderSettings();
-        const vtr::Renderer renderer(m_context->pool(), settings);
+        const vtr::Renderer renderer(m_context->pool(), m_context->renderSettings());
         const QSize size = renderer.objectSize(picture.id);
         QImage image(size.expandedTo(QSize(1, 1)), QImage::Format_ARGB32_Premultiplied);
         image.fill(Qt::transparent);
@@ -803,7 +986,7 @@ QWidget* PropertyEditor::listEditor(vt::ListKind kind, Refresher& refresher)
             for (const vt::ChildRef& c : obj.children) rows.push_back({c.id, c.x, c.y});
             break;
         case vt::ListKind::References:
-            for (vt::ObjectId id : obj.references) rows.push_back({id});
+            for (vt::ObjectId ref : obj.references) rows.push_back({ref});
             break;
         case vt::ListKind::Macros:
             for (const vt::MacroRef& m : obj.macros) rows.push_back({m.event, m.macro});
@@ -872,7 +1055,7 @@ void PropertyEditor::addUsageSection()
     addWideRow(section, label, [this, label] {
         QStringList links;
         for (vt::ObjectId user : vt::usersOf(m_context->pool(), m_objectId)) {
-            const vt::VtObject* o = m_context->pool().find(user);
+            const vt::VtObject* o = objectById(user);
             links << QStringLiteral("<a href=\"%1\">%2</a>").arg(user).arg(ui::objectDisplayName(*o).toHtmlEscaped());
         }
         label->setText(links.isEmpty() ? tr("<i>not referenced by any object</i>") : links.join(QStringLiteral(", ")));

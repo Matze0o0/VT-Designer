@@ -2056,288 +2056,315 @@
 <context>
     <name>PropertyEditor</name>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="110" />
+        <location filename="../src/app/PropertyEditor.cpp" line="130" />
         <source>Property</source>
         <translation>Eigenschaft</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="110" />
+        <location filename="../src/app/PropertyEditor.cpp" line="130" />
         <source>Value</source>
         <translation>Wert</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="146" />
-        <location filename="../src/app/PropertyEditor.cpp" line="854" />
+        <location filename="../src/app/PropertyEditor.cpp" line="176" />
+        <location filename="../src/app/PropertyEditor.cpp" line="1037" />
         <source>Change %1</source>
         <translation>%1 ändern</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="202" />
+        <location filename="../src/app/PropertyEditor.cpp" line="291" />
         <source>Select an object on the canvas or in the pool tree.</source>
         <translation>Wähle ein Objekt auf der Zeichenfläche oder im Pool-Baum aus.</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="222" />
+        <location filename="../src/app/PropertyEditor.cpp" line="311" />
         <source>used as symbol in the ID header</source>
         <translation>wird als Symbol im ID-Header verwendet</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="229" />
+        <location filename="../src/app/PropertyEditor.cpp" line="318" />
         <source>Rename object</source>
         <translation>Objekt umbenennen</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="232" />
+        <location filename="../src/app/PropertyEditor.cpp" line="321" />
         <source>Name</source>
         <translation>Name</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="248" />
-        <location filename="../src/app/PropertyEditor.cpp" line="255" />
+        <location filename="../src/app/PropertyEditor.cpp" line="337" />
+        <location filename="../src/app/PropertyEditor.cpp" line="344" />
         <source>Object ID</source>
         <translation>Objekt-ID</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="248" />
+        <location filename="../src/app/PropertyEditor.cpp" line="337" />
         <source>The object ID %1 is already in use.</source>
         <translation>Die Objekt-ID %1 ist bereits vergeben.</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="269" />
+        <location filename="../src/app/PropertyEditor.cpp" line="358" />
         <source>Position in %1</source>
         <translation>Position in %1</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="286" />
+        <location filename="../src/app/PropertyEditor.cpp" line="375" />
         <source>Move object</source>
         <translation>Objekt verschieben</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="288" />
-        <location filename="../src/app/PropertyEditor.cpp" line="772" />
-        <location filename="../src/app/PropertyEditor.cpp" line="786" />
+        <location filename="../src/app/PropertyEditor.cpp" line="377" />
+        <location filename="../src/app/PropertyEditor.cpp" line="955" />
+        <location filename="../src/app/PropertyEditor.cpp" line="969" />
         <source>X</source>
         <translation>X</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="288" />
-        <location filename="../src/app/PropertyEditor.cpp" line="773" />
-        <location filename="../src/app/PropertyEditor.cpp" line="786" />
+        <location filename="../src/app/PropertyEditor.cpp" line="377" />
+        <location filename="../src/app/PropertyEditor.cpp" line="956" />
+        <location filename="../src/app/PropertyEditor.cpp" line="969" />
         <source>Y</source>
         <translation>Y</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="306" />
+        <location filename="../src/app/PropertyEditor.cpp" line="393" />
         <source>Attributes</source>
         <translation>Attribute</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="313" />
+        <location filename="../src/app/PropertyEditor.cpp" line="409" />
         <source> (AID %1)</source>
         <translation> (AID %1)</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="412" />
-        <location filename="../src/app/PropertyEditor.cpp" line="516" />
+        <location filename="../src/app/PropertyEditor.cpp" line="593" />
+        <location filename="../src/app/PropertyEditor.cpp" line="698" />
         <source>(none)</source>
         <translation>(keins)</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="472" />
+        <location filename="../src/app/PropertyEditor.cpp" line="654" />
         <source>Select the referenced object</source>
         <translation>Referenziertes Objekt auswählen</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="498" />
+        <location filename="../src/app/PropertyEditor.cpp" line="680" />
         <source>New %1</source>
         <translation>Neues Objekt: %1</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="524" />
+        <location filename="../src/app/PropertyEditor.cpp" line="707" />
         <source>%1 (missing)</source>
         <translation>%1 (fehlt)</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="530" />
+        <location filename="../src/app/PropertyEditor.cpp" line="713" />
         <source>New %1…</source>
         <translation>Neu: %1…</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="551" />
+        <location filename="../src/app/PropertyEditor.cpp" line="735" />
         <source>Content</source>
         <translation>Inhalt</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="557" />
+        <location filename="../src/app/PropertyEditor.cpp" line="460" />
+        <location filename="../src/app/PropertyEditor.cpp" line="741" />
         <source>Characters</source>
         <translation>Zeichen</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="557" />
-        <location filename="../src/app/PropertyEditor.cpp" line="647" />
-        <location filename="../src/app/PropertyEditor.cpp" line="790" />
+        <location filename="../src/app/PropertyEditor.cpp" line="202" />
+        <source>Own copy of %1</source>
+        <translation>Eigene Kopie von %1</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../src/app/PropertyEditor.cpp" line="444" />
+        <source>Also used by %n other object(s) – changes apply to all.</source>
+        <translation><numerusform>Wird auch von %n weiteren Objekt verwendet – Änderungen wirken auf beide.</numerusform><numerusform>Wird auch von %n weiteren Objekten verwendet – Änderungen wirken auf alle.</numerusform></translation>
+    </message>
+    <message>
+        <location filename="../src/app/PropertyEditor.cpp" line="448" />
+        <source>Own copy</source>
+        <translation>Eigene Kopie</translation>
+    </message>
+    <message>
+        <location filename="../src/app/PropertyEditor.cpp" line="449" />
+        <source>Copy %1 so that changes only affect this object</source>
+        <translation>%1 kopieren, damit Änderungen nur dieses Objekt betreffen</translation>
+    </message>
+    <message>
+        <location filename="../src/app/PropertyEditor.cpp" line="460" />
+        <location filename="../src/app/PropertyEditor.cpp" line="741" />
+        <location filename="../src/app/PropertyEditor.cpp" line="831" />
+        <location filename="../src/app/PropertyEditor.cpp" line="973" />
         <source>Text</source>
         <translation>Text</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="563" />
+        <location filename="../src/app/PropertyEditor.cpp" line="501" />
+        <source>Line pattern: each square is one brush spot of the line width; dark squares are drawn.</source>
+        <translation>Linienmuster: Jedes Kästchen ist ein Pinselpunkt in Linienbreite; dunkle Kästchen werden gezeichnet.</translation>
+    </message>
+    <message>
+        <location filename="../src/app/PropertyEditor.cpp" line="747" />
         <source>Commands (hex)</source>
         <translation>Befehle (hex)</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="563" />
+        <location filename="../src/app/PropertyEditor.cpp" line="747" />
         <source>Data (hex)</source>
         <translation>Daten (hex)</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="577" />
+        <location filename="../src/app/PropertyEditor.cpp" line="761" />
         <source>Change languages</source>
         <translation>Sprachen ändern</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="580" />
+        <location filename="../src/app/PropertyEditor.cpp" line="764" />
         <source>Languages</source>
         <translation>Sprachen</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="592" />
+        <location filename="../src/app/PropertyEditor.cpp" line="776" />
         <source>Code planes</source>
         <translation>Code Planes</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="607" />
+        <location filename="../src/app/PropertyEditor.cpp" line="791" />
         <source>Child objects</source>
         <translation>Kindobjekte</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="607" />
+        <location filename="../src/app/PropertyEditor.cpp" line="791" />
         <source>Object references</source>
         <translation>Objektreferenzen</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="608" />
+        <location filename="../src/app/PropertyEditor.cpp" line="792" />
         <source>Points</source>
         <translation>Punkte</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="608" />
+        <location filename="../src/app/PropertyEditor.cpp" line="792" />
         <source>Labels</source>
         <translation>Labels</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="609" />
+        <location filename="../src/app/PropertyEditor.cpp" line="793" />
         <source>Macros</source>
         <translation>Makros</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="616" />
+        <location filename="../src/app/PropertyEditor.cpp" line="800" />
         <source>Soft keys</source>
         <translation>Soft Keys</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="618" />
+        <location filename="../src/app/PropertyEditor.cpp" line="802" />
         <source>List items</source>
         <translation>Listeneinträge</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="648" />
+        <location filename="../src/app/PropertyEditor.cpp" line="832" />
         <source>The text contains characters that the selected font type cannot show.</source>
         <translation>Der Text enthält Zeichen, die der gewählte Zeichensatz nicht darstellen kann.</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="654" />
+        <location filename="../src/app/PropertyEditor.cpp" line="838" />
         <source>Change text</source>
         <translation>Text ändern</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="661" />
+        <location filename="../src/app/PropertyEditor.cpp" line="845" />
         <source>Stored as WideString (UTF-16)</source>
         <translation>Gespeichert als WideString (UTF-16)</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/app/PropertyEditor.cpp" line="662" />
+        <location filename="../src/app/PropertyEditor.cpp" line="846" />
         <source>Stored as 8-bit string (%n byte(s))</source>
         <translation><numerusform>Gespeichert als 8-Bit-String (%n Byte)</numerusform><numerusform>Gespeichert als 8-Bit-String (%n Bytes)</numerusform></translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="683" />
+        <location filename="../src/app/PropertyEditor.cpp" line="867" />
         <source>Change data</source>
         <translation>Daten ändern</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="704" />
+        <location filename="../src/app/PropertyEditor.cpp" line="888" />
         <source>Import image…</source>
         <translation>Bild importieren…</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="705" />
+        <location filename="../src/app/PropertyEditor.cpp" line="889" />
         <source>Export image…</source>
         <translation>Bild exportieren…</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="715" />
+        <location filename="../src/app/PropertyEditor.cpp" line="899" />
         <source>Import image</source>
         <translation>Bild importieren</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="737" />
+        <location filename="../src/app/PropertyEditor.cpp" line="920" />
         <source>monochrome</source>
         <translation>monochrom</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="737" />
+        <location filename="../src/app/PropertyEditor.cpp" line="920" />
         <source>16 colours</source>
         <translation>16 Farben</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="737" />
+        <location filename="../src/app/PropertyEditor.cpp" line="920" />
         <source>256 colours</source>
         <translation>256 Farben</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="738" />
+        <location filename="../src/app/PropertyEditor.cpp" line="921" />
         <source>%1 × %2 px, %3, %4 bytes%5</source>
         <translation>%1 × %2 px, %3, %4 Bytes%5</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="744" />
+        <location filename="../src/app/PropertyEditor.cpp" line="927" />
         <source> (RLE)</source>
         <translation> (RLE)</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="771" />
-        <location filename="../src/app/PropertyEditor.cpp" line="778" />
-        <location filename="../src/app/PropertyEditor.cpp" line="789" />
+        <location filename="../src/app/PropertyEditor.cpp" line="954" />
+        <location filename="../src/app/PropertyEditor.cpp" line="961" />
+        <location filename="../src/app/PropertyEditor.cpp" line="972" />
         <source>Object</source>
         <translation>Objekt</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="783" />
+        <location filename="../src/app/PropertyEditor.cpp" line="966" />
         <source>Event</source>
         <translation>Ereignis</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="783" />
+        <location filename="../src/app/PropertyEditor.cpp" line="966" />
         <source>Macro</source>
         <translation>Makro</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="791" />
+        <location filename="../src/app/PropertyEditor.cpp" line="974" />
         <source>Font type</source>
         <translation>Zeichensatz</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="792" />
+        <location filename="../src/app/PropertyEditor.cpp" line="975" />
         <source>Graphic</source>
         <translation>Grafik</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="866" />
+        <location filename="../src/app/PropertyEditor.cpp" line="1049" />
         <source>Used by</source>
         <translation>Verwendet von</translation>
     </message>
     <message>
-        <location filename="../src/app/PropertyEditor.cpp" line="878" />
+        <location filename="../src/app/PropertyEditor.cpp" line="1061" />
         <source>&lt;i&gt;not referenced by any object&lt;/i&gt;</source>
         <translation>&lt;i&gt;von keinem Objekt referenziert&lt;/i&gt;</translation>
     </message>
